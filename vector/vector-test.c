@@ -91,13 +91,12 @@ static void test_vector_creation(void **state)
  * when using vector_add(). */
 static void test_vector_double_capacity_add(void **state)
 {
-    int capacity;
     Vector *vector = (Vector *) *state;
     assert_non_null(vector);
 
     for (int i = 1; i <= 65; i++) {
         assert_int_equal(vector_add(vector, &i), 0);
-        capacity = (int) vector->capacity;
+        int capacity = (int) vector->capacity;
 
         if (i <= 4) assert_int_equal(capacity, 4);
         else if (i <= 8) assert_int_equal(capacity, 8);
@@ -114,13 +113,12 @@ static void test_vector_double_capacity_add(void **state)
  * when using vector_insert(). */
 static void test_vector_double_capacity_insert(void **state)
 {
-    int capacity;
     Vector *vector = (Vector *) *state;
     assert_non_null(vector);
 
     for (int i = 1; i <= 65; i++) {
         assert_int_equal(vector_insert(vector, &i, 0), 0);
-        capacity = (int) vector->capacity;
+        int capacity = (int) vector->capacity;
 
         if (i <= 4) assert_int_equal(capacity, 4);
         else if (i <= 8) assert_int_equal(capacity, 8);
@@ -138,13 +136,12 @@ static void test_vector_double_capacity_insert(void **state)
  */
 static void test_vector_half_capacity(void **state)
 {
-    int capacity;
     Vector *vector = (Vector *) *state;
     assert_non_null(vector);
 
     for (int i = 64; i >= 0; i--) {
         assert_int_equal(vector_delete(vector, 0), 0);
-        capacity = (int) vector->capacity;
+        int capacity = (int) vector->capacity;
 
         if (i > 32) assert_int_equal(capacity, 128);
         else if (i > 16) assert_int_equal(capacity, 64);
