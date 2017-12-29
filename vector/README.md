@@ -23,9 +23,9 @@ typedef struct {
 * `int vector_insert(Vector *vector, void *item, int index)` -- Inserts the `item` to the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
 * `int vector_delete(Vector *vector, int index)` -- Deletes an item in the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
 
-## Usage
+## Usage example with integers
 
-The following example shows how the `Vector` API can be used to add, insert or delete items:
+The following example shows how the `Vector` API can be used to add, insert or delete integer items:
 
 ```
 #include "vector.h"
@@ -71,6 +71,56 @@ void vector_int_print(Vector *vector)
     printf("]\n");
 }
 ```
+
+## Usage example with user-defined data structures
+
+Since the `Vector` implementation is generic, it is possible to handle user-defined data structures in the same way. The following example illustrates adding and inserting `struct` items:
+
+```
+#include "vector.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+void vector_point_print(Vector *vector);
+
+typedef struct {
+    int x;
+    int y;
+} Point;
+
+int main(void)
+{
+    Vector *vector = vector_create();
+    if (!vector) {
+        fprintf(stderr, "Cannot allocate vector.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    Point p1 = {.x = 1, .y = 10};
+    Point p2 = {.x = 2, .y = 20};
+    Point p3 = {.x = 3, .y = 30};
+       
+    vector_add(vector, &p1);
+    vector_add(vector, &p3);
+    vector_insert(vector, &p2, 1);
+
+    vector_point_print(vector); /* [ (1, 10) (2, 20) (3, 30) ] */
+    vector_free(vector);
+
+    return EXIT_SUCCESS;
+}
+
+void vector_point_print(Vector *vector)
+{
+    printf("[ ");
+    for (size_t i = 0; i < vector->count; i++) {
+        Point *point = (Point *) vector->data[i];
+        printf("(%d, %d) ", point->x, point->y);
+    }
+    printf("]\n");
+}
+```
+
 
 ## Tests
 
