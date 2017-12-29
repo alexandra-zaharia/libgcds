@@ -94,16 +94,10 @@ int vector_delete(Vector *vector, int index)
     if (!vector || !vector->data) return -1;
     if (index < 0 || index >= vector->count) return -1;
 
-    void **data = (void *)malloc(vector->capacity * sizeof(void *));
-    if (!data) return -1;
-
-    for (int i = 0, j = 0; i < vector->count; i++) {
-        if (i != index)
-            data[j++] = vector->data[i];
-    }
-    free(vector->data);
-    vector->data = data;
     vector->count--;
+
+    for (int i = index; i < vector->count; i++)
+        vector->data[i] = vector->data[i+1];
 
     if (vector->count == vector->capacity / 4
             && vector->capacity > VECTOR_INIT_CAPACITY) {
