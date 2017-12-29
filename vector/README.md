@@ -74,7 +74,7 @@ void vector_int_print(Vector *vector)
 
 ## Tests
 
-Running the tests provided in `vector-test.c` requires [cmocka](https://cmocka.org). Build the tests with:
+Running the tests provided in [`vector-test.c`](https://github.com/alexandra-zaharia/cdslib/blob/master/vector/vector-test.c) requires [cmocka](https://cmocka.org). Build the tests with:
 
 ```
 gcc -Wall vector-test.c vector.c -g -o vector-test -lcmocka
