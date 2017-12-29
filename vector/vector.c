@@ -1,5 +1,4 @@
 #include "vector.h"
-#include <stdio.h>
 
 const size_t VECTOR_INIT_CAPACITY = 4;
 
