@@ -12,7 +12,7 @@ Vector *vector_create()
     vector->count = 0;
     vector->capacity = VECTOR_INIT_CAPACITY;
 
-    vector->data = (void *)malloc(vector->capacity * sizeof(void *));
+    vector->data = malloc(vector->capacity * sizeof(void *));
     if (!vector->data) {
         vector_free(vector);
         return NULL;
@@ -41,7 +41,6 @@ static int _vector_resize(Vector *vector, size_t capacity)
     if (!data) return -1;
     if (data != vector->data)
         vector->data = data;
-    data = NULL;
 
     return 0;
 }
@@ -64,10 +63,10 @@ int vector_add(Vector *vector, void *item)
 
 /* Inserts an item at a specified index in the Vector. Returns 0 on success and
  * -1 on failure. */
-int vector_insert(Vector *vector, void *item, int index)
+int vector_insert(Vector *vector, void *item, size_t index)
 {
     if (!vector || !vector->data) return -1;
-    if (index < 0 || index > vector->count) return -1;
+    if ((int) index < 0 || index > vector->count) return -1;
 
     if (index == vector->count) {
         if (vector_add(vector, item) == -1) return -1;
@@ -77,7 +76,7 @@ int vector_insert(Vector *vector, void *item, int index)
                 return -1;
         }
 
-        for (int i = vector->count; i > index; i--)
+        for (size_t i = vector->count; i > index; i--)
             vector->data[i] = vector->data[i-1];
 
         vector->data[index] = item;
@@ -89,14 +88,14 @@ int vector_insert(Vector *vector, void *item, int index)
 
 /* Deletes the item at the specified index in the Vector. Returns 0 on success
  * and -1 on failure. */
-int vector_delete(Vector *vector, int index)
+int vector_delete(Vector *vector, size_t index)
 {
     if (!vector || !vector->data) return -1;
-    if (index < 0 || index >= vector->count) return -1;
+    if ((int) index < 0 || index >= vector->count) return -1;
 
     vector->count--;
 
-    for (int i = index; i < vector->count; i++)
+    for (size_t i = index; i < vector->count; i++)
         vector->data[i] = vector->data[i+1];
 
     if (vector->count == vector->capacity / 4
