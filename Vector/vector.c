@@ -93,8 +93,7 @@ int vector_delete(Vector *vector, unsigned int index)
     for (size_t i = index; i < vector->count; i++)
         vector->data[i] = vector->data[i+1];
 
-    if (vector->count == vector->capacity / 4
-            && vector->capacity > VECTOR_INIT_CAPACITY) {
+    if (vector->count == vector->capacity / 4 && vector->capacity > VECTOR_INIT_CAPACITY) {
         if (_vector_resize(vector, vector->capacity / 2) == -1)
             return -1;
     }
