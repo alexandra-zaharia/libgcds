@@ -15,7 +15,7 @@ This is a generic stack implementation. A stack is a LIFO (last in, first out) d
 
 The following example shows how the `Stack` API can be used with integer items:
 
-```
+```c
 #include <stdlib.h>
 #include <stdio.h>
 #include "stack.h"
@@ -65,7 +65,7 @@ void print(Stack* stack)
 
 Since the `Stack` implementation is generic, it is possible to handle user-defined data structures in the same way. The following example illustrates a stack accepting `struct` items:
 
-```
+```c
 #include <stdlib.h>
 #include <stdio.h>
 #include "stack.h"

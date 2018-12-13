@@ -27,7 +27,7 @@ typedef struct {
 
 The following example shows how the `Vector` API can be used to add, insert or delete integer items:
 
-```
+```c
 #include "vector.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -76,7 +76,7 @@ void vector_int_print(Vector *vector)
 
 Since the `Vector` implementation is generic, it is possible to handle user-defined data structures in the same way. The following example illustrates adding and inserting `struct` items:
 
-```
+```c
 #include "vector.h"
 #include <stdio.h>
 #include <stdlib.h>
