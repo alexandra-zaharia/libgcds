@@ -6,11 +6,11 @@ This is a generic vector implementation using an underlying resizing array. A ve
 
 A `Vector` is defined as follows:
 
-```
+```c
 typedef struct {
-    void **data;     /* information stored in the vector */
-    size_t count;    /* number of elements currently used in the vector */
-    size_t capacity; /* maximum capacity of the vector */
+    void **data;           /* information stored in the vector */
+    unsigned int count;    /* number of elements currently used in the vector */
+    unsigned int capacity; /* maximum capacity of the vector */
 } Vector;
 ```
 
@@ -36,7 +36,7 @@ void vector_int_print(Vector *vector);
 
 int main(void)
 {
-    int i;
+    unsigned int i;
     Vector *vector = vector_create();
     if (!vector) {
         fprintf(stderr, "Cannot allocate vector.\n");
@@ -66,7 +66,7 @@ int main(void)
 void vector_int_print(Vector *vector)
 {
     printf("[ ");
-    for (size_t i = 0; i < vector->count; i++)
+    for (unsigned int i = 0; i < vector->count; i++)
         printf("%d ", *((int *) vector->data[i]));
     printf("]\n");
 }
@@ -113,7 +113,7 @@ int main(void)
 void vector_point_print(Vector *vector)
 {
     printf("[ ");
-    for (size_t i = 0; i < vector->count; i++) {
+    for (unsigned int i = 0; i < vector->count; i++) {
         Point *point = (Point *) vector->data[i];
         printf("(%d, %d) ", point->x, point->y);
     }
