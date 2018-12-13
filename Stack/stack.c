@@ -15,7 +15,7 @@ Item* item_create(void* data)
     return item;
 }
 
-// Frees the linked list.
+// Frees the stack.
 void stack_free(Stack* stack)
 {
     if (!stack) return;
