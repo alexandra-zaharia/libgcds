@@ -28,7 +28,7 @@ static int teardown_vector(void **state)
 char *str_value;
 
 /* Fixture setup: initializes a string. */
-static int setup_string(void **state)
+static int setup_string()
 {
     str_value = (char *)malloc(strlen("a string") + 1);
     if (!str_value)
@@ -38,7 +38,7 @@ static int setup_string(void **state)
 }
 
 /* Fixture teardown: frees a string. */
-static int teardown_string(void **state)
+static int teardown_string()
 {
     if (!str_value)
         return -1;
@@ -49,7 +49,7 @@ static int teardown_string(void **state)
 int *values;
 
 /* Fixture setup: initializes array of integers. */
-static int setup_values(void **state)
+static int setup_values()
 {
     values = (int *)malloc(10 * sizeof(int));
     assert_non_null(values);
@@ -59,7 +59,7 @@ static int setup_values(void **state)
 }
 
 /* Fixture teardown: frees array of integers. */
-static int teardown_values(void **state)
+static int teardown_values()
 {
     assert_non_null(values);
     free(values);
@@ -155,7 +155,7 @@ static void test_vector_half_capacity(void **state)
 }
 
 /* Ensure that adding to a NULL Vector or Vector data results in failure. */
-static void test_vector_add_fail_null(void **state)
+static void test_vector_add_fail_null()
 {
     int value = 5;
     assert_int_equal(vector_add(NULL, &value), -1);
@@ -254,7 +254,7 @@ static void test_vector_add_struct(void **state)
 }
 
 /* Ensure that insertion into NULL Vector or Vector data results in failure. */
-static void test_vector_insert_fail_null(void **state)
+static void test_vector_insert_fail_null()
 {
     int value = 7;
     assert_int_equal(vector_insert(NULL, &value, 0), -1);

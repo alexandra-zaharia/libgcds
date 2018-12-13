@@ -1,9 +1,8 @@
 #include "vector.h"
 
-const size_t VECTOR_INIT_CAPACITY = 4;
+const unsigned int VECTOR_INIT_CAPACITY = 4;
 
-/* Creates and returns a pointer to Vector. If the Vector cannot be allocated,
- * a NULL pointer is returned. */
+// Creates and returns a pointer to Vector, or NULL in case of failure.
 Vector *vector_create()
 {
     Vector *vector = (Vector *)malloc(sizeof(Vector));
@@ -21,7 +20,7 @@ Vector *vector_create()
     return vector;
 }
 
-/* Frees the given Vector, if not NULL. */
+// Frees the vector.
 void vector_free(Vector *vector)
 {
     if (vector) {
@@ -31,9 +30,8 @@ void vector_free(Vector *vector)
     }
 }
 
-/* Resizes the Vector to the specified capacity. Returns 0 on success and -1 on
- * failure. */
-static int _vector_resize(Vector *vector, size_t capacity)
+// Resizes the vector to the specified capacity. Returns 0 for success and -1 for failure.
+static int _vector_resize(Vector *vector, unsigned int capacity)
 {
     void **data = realloc(vector->data, capacity * sizeof(void *));
     vector->capacity = capacity;
@@ -45,8 +43,7 @@ static int _vector_resize(Vector *vector, size_t capacity)
     return 0;
 }
 
-/* Adds an item at the end of the Vector. Returns 0 on success and -1 on
- * failure. */
+// Adds an item at the end of the vector. Returns 0 for success and -1 for failure.
 int vector_add(Vector *vector, void *item)
 {
     if (!vector || !vector->data) return -1;
@@ -61,9 +58,8 @@ int vector_add(Vector *vector, void *item)
     return 0;
 }
 
-/* Inserts an item at a specified index in the Vector. Returns 0 on success and
- * -1 on failure. */
-int vector_insert(Vector *vector, void *item, size_t index)
+// Inserts an item at a specified index in the vector. Returns 0 for success and -1 for failure.
+int vector_insert(Vector *vector, void *item, unsigned int index)
 {
     if (!vector || !vector->data) return -1;
     if ((int) index < 0 || index > vector->count) return -1;
@@ -86,9 +82,8 @@ int vector_insert(Vector *vector, void *item, size_t index)
     return 0;
 }
 
-/* Deletes the item at the specified index in the Vector. Returns 0 on success
- * and -1 on failure. */
-int vector_delete(Vector *vector, size_t index)
+// Deletes the item at the specified index in the vector. Returns 0 for success and -1 for failure.
+int vector_delete(Vector *vector, unsigned int index)
 {
     if (!vector || !vector->data) return -1;
     if ((int) index < 0 || index >= vector->count) return -1;
