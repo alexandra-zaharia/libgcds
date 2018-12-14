@@ -48,7 +48,7 @@ int linked_list_insert_start(LinkedList* list, void* data)
     Node* node = node_create(data);
     if (!node) return -1;
 
-    if (!list->head) {
+    if (list->is_empty(list)) {
         list->head = list->tail = node;
     } else {
         node->next = list->head;
@@ -69,7 +69,7 @@ int linked_list_insert_end(LinkedList* list, void* data)
     Node* node = node_create(data);
     if (!node) return -1;
 
-    if (!list->tail) {
+    if (list->is_empty(list)) {
         list->tail = list->head = node;
     } else {
         node->prev = list->tail;
@@ -90,7 +90,7 @@ static Node* _find_node_at_index(LinkedList* list, unsigned int index)
     Node* node;
     unsigned int current_index;
 
-    if (index < list->size / 2) {
+    if (index <= list->size / 2) {
         node = list->head;
         current_index = 0;
         while (current_index < index) {
@@ -122,6 +122,8 @@ int linked_list_insert_at(LinkedList* list, void* data, unsigned int index)
     Node* node = node_create(data);
     if (!node) return -1;
     Node* node_at_index = _find_node_at_index(list, index);
+    if (!node_at_index) return -1;
+
     node_at_index->prev->next = node;
     node->prev = node_at_index->prev;
     node_at_index->prev = node;
@@ -138,11 +140,16 @@ void* linked_list_remove_start(LinkedList* list)
     if (!list || !list->head) return NULL;
 
     Node* node = list->head;
-    list->head = node->next;
+
+    if (--list->size == 0) {
+        list->head = list->tail = NULL;
+    } else {
+        node->next->prev = NULL;
+        list->head = node->next;
+    }
 
     void* data = node->data;
     free(node);
-    --list->size;
 
     return data;
 }
@@ -153,11 +160,16 @@ void* linked_list_remove_end(LinkedList* list)
     if (!list || !list->tail) return NULL;
 
     Node* node = list->tail;
-    list->tail = node->prev;
+
+    if (--list->size == 0) {
+        list->head = list->tail = NULL;
+    } else {
+        node->prev->next = NULL;
+        list->tail = node->prev;
+    }
 
     void* data = node->data;
     free(node);
-    --list->size;
 
     return data;
 }
@@ -173,6 +185,8 @@ void* linked_list_remove_at(LinkedList* list, unsigned int index)
     if (index == list->size - 1) return list->remove_end(list);
 
     Node* node = _find_node_at_index(list, index);
+    if (!node) return NULL;
+
     node->prev->next = node->next;
     node->next->prev = node->prev;
 
