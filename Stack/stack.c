@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "stack.h"
 
-// Creates and returns an Item* holding the designated data, or NULL in case of failure.
+// Creates and returns an Item* storing the designated data, or NULL in case of failure.
 Item* item_create(void* data)
 {
     Item* item = malloc(sizeof(Item));
@@ -30,6 +30,7 @@ void stack_free(Stack* stack)
     free(stack);
 }
 
+// Returns true if the stack is empty, false otherwise.
 bool stack_is_empty(Stack* stack)
 {
     return stack->top == NULL;
