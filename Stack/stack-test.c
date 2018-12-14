@@ -33,7 +33,7 @@ int values[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 // Tests -----------------------------------------------------------------------
 
-static void test_stack_creation(void **state)
+static void test_stack_create(void **state)
 {
     Stack* stack = (Stack*) *state;
     assert_non_null(stack);
@@ -76,7 +76,7 @@ static void test_stack_pop(void **state)
 int main()
 {
     const struct CMUnitTest tests[] = {
-            cmocka_unit_test(test_stack_creation),
+            cmocka_unit_test(test_stack_create),
             cmocka_unit_test(test_stack_is_empty),
             cmocka_unit_test(test_stack_push),
             cmocka_unit_test(test_stack_pop)
