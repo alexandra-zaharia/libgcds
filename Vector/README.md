@@ -6,11 +6,11 @@ This is a generic vector implementation using an underlying resizing array. A ve
 
 A `Vector` is defined as follows:
 
-```
+```c
 typedef struct {
-    void **data;     /* information stored in the vector */
-    size_t count;    /* number of elements currently used in the vector */
-    size_t capacity; /* maximum capacity of the vector */
+    void **data;           /* information stored in the vector */
+    unsigned int count;    /* number of elements currently used in the vector */
+    unsigned int capacity; /* maximum capacity of the vector */
 } Vector;
 ```
 
@@ -20,8 +20,8 @@ typedef struct {
 * `Vector *vector_create()` -- Creates a new `vector` and returns a pointer to it, or `NULL` in case of failure.
 * `void vector_free(Vector *vector)` -- Frees the given `vector`.
 * `int vector_add(Vector *vector, void *item)` -- Adds the `item` at the end of the `vector`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
-* `int vector_insert(Vector *vector, void *item, int index)` -- Inserts the `item` to the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
-* `int vector_delete(Vector *vector, int index)` -- Deletes an item in the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
+* `int vector_insert(Vector *vector, void *item, unsigned int index)` -- Inserts the `item` to the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
+* `int vector_delete(Vector *vector, unsigned int index)` -- Deletes an item in the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
 
 ## Usage example with integers
 
@@ -36,7 +36,7 @@ void vector_int_print(Vector *vector);
 
 int main(void)
 {
-    int i;
+    unsigned int i;
     Vector *vector = vector_create();
     if (!vector) {
         fprintf(stderr, "Cannot allocate vector.\n");
@@ -66,7 +66,7 @@ int main(void)
 void vector_int_print(Vector *vector)
 {
     printf("[ ");
-    for (size_t i = 0; i < vector->count; i++)
+    for (unsigned int i = 0; i < vector->count; i++)
         printf("%d ", *((int *) vector->data[i]));
     printf("]\n");
 }
@@ -113,7 +113,7 @@ int main(void)
 void vector_point_print(Vector *vector)
 {
     printf("[ ");
-    for (size_t i = 0; i < vector->count; i++) {
+    for (unsigned int i = 0; i < vector->count; i++) {
         Point *point = (Point *) vector->data[i];
         printf("(%d, %d) ", point->x, point->y);
     }
