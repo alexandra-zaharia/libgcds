@@ -5,11 +5,11 @@ This is a generic stack implementation. A stack is a LIFO (last in, first out) d
 ## API
 
 `Stack` has the following API:
-* `Stack* stack_create()` -- Creates a new `Stack` and returns a pointer to it, or `NULL` in case of failure.
-* `stack->free(stack)` -- Frees the given `stack`.
-* `stack->is_empty(stack)` -- Returns `true` if the `stack` is empty, `false` otherwise.
-* `stack->push(stack, void* item)` -- Adds the `item` on top of the `stack`. Returns 0 on success and -1 on failure.
-* `stack->pop(stack)` -- Removes and returns the item on top of the `stack`. Returns `NULL` if the stack is null or empty.
+  * `Stack* stack_create()` -- Creates a new `Stack` and returns a pointer to it, or `NULL` in case of failure.
+  * `stack->free(stack)` -- Frees the given `stack`.
+  * `stack->is_empty(stack)` -- Returns `true` if the `stack` is empty, `false` otherwise.
+  * `stack->push(stack, void* item)` -- Adds the `item` on top of the `stack`. Returns 0 on success and -1 on failure.
+  * `stack->pop(stack)` -- Removes and returns the item on top of the `stack`. Returns `NULL` if the stack is null or empty.
 
 ## Usage example with integers
 
@@ -120,11 +120,10 @@ void stack_point_print(Stack* stack)
 }
 ```
 
-
 ## Tests
 
 Running the tests provided in [`stack-test.c`](https://github.com/alexandra-zaharia/cdslib/blob/master/Stack/stack-test.c) requires [cmocka](https://cmocka.org). Build the tests with:
 
-```
+```bash
 gcc -Wall stack-test.c stack.c -g -o stack-test -lcmocka
 ```

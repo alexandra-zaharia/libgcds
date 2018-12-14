@@ -7,5 +7,5 @@ C library for generic data structures
 ## Data structures 
 
 For the moment, `cdslib` features the following data structures:
-* [`Stack`](https://github.com/alexandra-zaharia/cdslib/tree/master/Stack) -- A stack implementation accepting `push` and `pop` operations.
-* [`Vector`](https://github.com/alexandra-zaharia/cdslib/tree/master/Vector) -- A vector implementation using an underlying resizing array.
+  * [`Stack`](https://github.com/alexandra-zaharia/cdslib/tree/master/Stack) -- A stack implementation accepting `push` and `pop` operations.
+  * [`Vector`](https://github.com/alexandra-zaharia/cdslib/tree/master/Vector) -- A vector implementation using an underlying resizing array.

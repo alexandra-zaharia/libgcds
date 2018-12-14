@@ -17,11 +17,11 @@ typedef struct {
 ## API
 
 `Vector` has the following API:
-* `Vector *vector_create()` -- Creates a new `vector` and returns a pointer to it, or `NULL` in case of failure.
-* `void vector_free(Vector *vector)` -- Frees the given `vector`.
-* `int vector_add(Vector *vector, void *item)` -- Adds the `item` at the end of the `vector`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
-* `int vector_insert(Vector *vector, void *item, unsigned int index)` -- Inserts the `item` to the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
-* `int vector_delete(Vector *vector, unsigned int index)` -- Deletes an item in the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
+  * `Vector *vector_create()` -- Creates a new `vector` and returns a pointer to it, or `NULL` in case of failure.
+  * `void vector_free(Vector *vector)` -- Frees the given `vector`.
+  * `int vector_add(Vector *vector, void *item)` -- Adds the `item` at the end of the `vector`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
+  * `int vector_insert(Vector *vector, void *item, unsigned int index)` -- Inserts the `item` to the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
+  * `int vector_delete(Vector *vector, unsigned int index)` -- Deletes an item in the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
 
 ## Usage example with integers
 
@@ -121,11 +121,10 @@ void vector_point_print(Vector *vector)
 }
 ```
 
-
 ## Tests
 
 Running the tests provided in [`vector-test.c`](https://github.com/alexandra-zaharia/cdslib/blob/master/Vector/vector-test.c) requires [cmocka](https://cmocka.org). Build the tests with:
 
-```
+```bash
 gcc -Wall vector-test.c vector.c -g -o vector-test -lcmocka
 ```
