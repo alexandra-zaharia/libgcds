@@ -70,12 +70,21 @@ static void test_linked_list_insert_end(void** state)
 
 int main()
 {
-    const struct CMUnitTest tests[] = {
+    const struct CMUnitTest tests_creation[] = {
             cmocka_unit_test(test_linked_list_create),
-            cmocka_unit_test(test_linked_list_is_empty),
-            cmocka_unit_test(test_linked_list_insert_start),
-            cmocka_unit_test(test_linked_list_insert_end),
+            cmocka_unit_test(test_linked_list_is_empty)
     };
 
-    return cmocka_run_group_tests(tests, setup_linked_list, teardown_linked_list);
+    const struct CMUnitTest tests_insertion[] = {
+            cmocka_unit_test_setup_teardown(
+                    test_linked_list_insert_start, setup_linked_list, teardown_linked_list),
+            cmocka_unit_test_setup_teardown(
+                    test_linked_list_insert_end, setup_linked_list, teardown_linked_list),
+    };
+
+    int status_creation = cmocka_run_group_tests(
+            tests_creation, setup_linked_list, teardown_linked_list);
+    int status_insertion = cmocka_run_group_tests(tests_insertion, NULL, NULL);
+
+    return status_creation && status_insertion;
 }
