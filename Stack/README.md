@@ -8,7 +8,7 @@ This is a generic stack implementation. A stack is a LIFO (last in, first out) d
   * `Stack* stack_create()` -- Creates a new `Stack` and returns a pointer to it, or `NULL` in case of failure.
   * `stack->free(stack)` -- Frees the given `stack`.
   * `stack->is_empty(stack)` -- Returns `true` if the `stack` is empty, `false` otherwise.
-  * `stack->push(stack, void* item)` -- Adds the `item` on top of the `stack`. Returns 0 on success and -1 on failure.
+  * `stack->push(stack, item)` -- Adds the `item` on top of the `stack`. Returns 0 on success and -1 on failure.
   * `stack->pop(stack)` -- Removes and returns the item on top of the `stack`. Returns `NULL` if the stack is null or empty.
 
 ## Usage example with integers
