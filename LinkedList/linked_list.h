@@ -22,7 +22,7 @@ struct LinkedList {
     Node* tail;                              // last node of the linked list
     unsigned int size;                       // number of items in the linked list
 
-    void (*free)(LinkedList*);               // frees the stack
+    void (*free)(LinkedList*);               // frees the linked list
     bool (*is_empty)(LinkedList*);           // is the linked list empty?
 
     int (*insert_start)(LinkedList*, void*); // adds an item at the front of the linked list

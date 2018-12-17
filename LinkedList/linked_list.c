@@ -3,7 +3,6 @@
 //
 
 #include <stdlib.h>
-#include <stdio.h> // TODO
 #include "linked_list.h"
 
 // Creates and returns a Node* storing the designated data, or NULL in case of failure.
