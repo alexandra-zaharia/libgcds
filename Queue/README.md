@@ -125,5 +125,5 @@ void stack_point_print(Stack* stack)
 Running the tests provided in [`queue-test.c`](https://github.com/alexandra-zaharia/cdslib/blob/master/Queue/queue-test.c) requires [cmocka](https://cmocka.org). Build the tests with:
 
 ```bash
-gcc -Wall queue-test.c queue.c -g -o queue-test -lcmocka
+gcc -Wall queue-test.c queue.c ../node.c -g -o queue-test -lcmocka
 ```

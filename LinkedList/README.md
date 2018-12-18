@@ -56,7 +56,7 @@ int main()
 void print(LinkedList* list)
 {
     if (!list || list->is_empty(list)) return;
-    Node* node = list->head;
+    DNode* node = list->head;
     while (node) {
         printf("%d ", *((int*) node->data));
         node = node->next;
@@ -114,7 +114,7 @@ int main()
 void list_point_print(LinkedList* list)
 {
     if (!list || list->is_empty(list)) return;
-    Node* node = list->head;
+    DNode* node = list->head;
     while (node) {
         Point* p = (Point*) node->data;
         printf("(%d, %d) ", p->x, p->y);
@@ -129,5 +129,5 @@ void list_point_print(LinkedList* list)
 Running the tests provided in [`linked_list-test.c`](https://github.com/alexandra-zaharia/cdslib/blob/master/LinkedList/linked_list-test.c) requires [cmocka](https://cmocka.org). Build the tests with:
 
 ```bash
-gcc -Wall linked_list-test.c linked_list.c -g -o linked_list-test -lcmocka
+gcc -Wall linked_list-test.c linked_list.c ../node.c -g -o linked_list-test -lcmocka
 ```

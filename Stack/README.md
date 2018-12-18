@@ -125,5 +125,5 @@ void stack_point_print(Stack* stack)
 Running the tests provided in [`stack-test.c`](https://github.com/alexandra-zaharia/cdslib/blob/master/Stack/stack-test.c) requires [cmocka](https://cmocka.org). Build the tests with:
 
 ```bash
-gcc -Wall stack-test.c stack.c -g -o stack-test -lcmocka
+gcc -Wall stack-test.c stack.c ../node.c -g -o stack-test -lcmocka
 ```
