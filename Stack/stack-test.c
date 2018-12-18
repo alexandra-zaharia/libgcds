@@ -56,18 +56,30 @@ static void test_stack_push(void **state)
         assert_int_equal(stack->size, i+1);
         assert_false(stack->is_empty(stack));
     }
+
+    assert_int_equal(stack->push(NULL, &values[0]), -1);
+    assert_int_equal(stack->size, 10);
+    assert_false(stack->is_empty(stack));
+
     *state = stack;
 }
 
 static void test_stack_pop(void **state)
 {
     Stack* stack = (Stack*) *state;
+
     for (int i = 9; i >= 0; i--) {
         int val = *((int*) stack->pop(stack));
         assert_int_equal(val, values[i]);
         assert_int_equal(stack->size, i);
         i > 0 ? assert_false(stack->is_empty(stack)) : assert_true(stack->is_empty(stack));
     }
+
+    int* val = (int*) stack->pop(stack);
+    assert_null(val);
+    assert_int_equal(stack->size, 0);
+    assert_true(stack->is_empty(stack));
+
     *state = stack;
 }
 
