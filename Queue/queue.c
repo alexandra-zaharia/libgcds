@@ -5,16 +5,6 @@
 #include <stdlib.h>
 #include "queue.h"
 
-// Creates and returns a Node* storing the designated data, or NULL in case of failure.
-Node* node_create(void* data)
-{
-    Node* node = malloc(sizeof(Node));
-    if (!node) return NULL;
-    node->data = data;
-    node->next = NULL;
-    return node;
-}
-
 // Frees the queue.
 void queue_free(Queue* queue)
 {

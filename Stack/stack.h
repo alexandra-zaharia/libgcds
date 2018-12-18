@@ -6,13 +6,7 @@
 #define CDSLIB_STACK_H
 
 #include <stdbool.h>
-
-typedef struct Item Item;
-
-struct Item {
-    void* data;
-    Item* next;
-};
+#include "../node.h"
 
 typedef struct Stack Stack;
 

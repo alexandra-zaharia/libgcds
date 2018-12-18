@@ -5,26 +5,15 @@
 #include <stdlib.h>
 #include "linked_list.h"
 
-// Creates and returns a Node* storing the designated data, or NULL in case of failure.
-Node* node_create(void* data)
-{
-    Node* node = malloc(sizeof(Node));
-    if (!node) return NULL;
-    node->data = data;
-    node->next = NULL;
-    node->prev = NULL;
-    return node;
-}
-
 // Frees the linked list.
 void linked_list_free(LinkedList* list)
 {
     if (!list) return;
 
     if (list->head) {
-        Node *node = list->head;
+        DNode *node = list->head;
         while (node) {
-            Node *tmp = node;
+            DNode *tmp = node;
             node = node->next;
             free(tmp);
         }
@@ -44,7 +33,7 @@ int linked_list_insert_start(LinkedList* list, void* data)
 {
     if (!list) return -1;
 
-    Node* node = node_create(data);
+    DNode* node = dnode_create(data);
     if (!node) return -1;
 
     if (list->is_empty(list)) {
@@ -65,7 +54,7 @@ int linked_list_insert_end(LinkedList* list, void* data)
 {
     if (!list) return -1;
 
-    Node* node = node_create(data);
+    DNode* node = dnode_create(data);
     if (!node) return -1;
 
     if (list->is_empty(list)) {
@@ -82,11 +71,11 @@ int linked_list_insert_end(LinkedList* list, void* data)
 }
 
 // Returns the Node* at the designated index in the linked list, or NULL in case of failure.
-static Node* _find_node_at_index(LinkedList* list, unsigned int index)
+static DNode* _find_node_at_index(LinkedList* list, unsigned int index)
 {
     if (!list || (int) index < 0 || index >= list->size) return NULL;
 
-    Node* node;
+    DNode* node;
     unsigned int current_index;
 
     if (index <= list->size / 2) {
@@ -118,9 +107,9 @@ int linked_list_insert_at(LinkedList* list, void* data, unsigned int index)
     if (index == 0) return list->insert_start(list, data);
     if (index == list->size) return list->insert_end(list, data);
 
-    Node* node = node_create(data);
+    DNode* node = dnode_create(data);
     if (!node) return -1;
-    Node* node_at_index = _find_node_at_index(list, index);
+    DNode* node_at_index = _find_node_at_index(list, index);
     if (!node_at_index) return -1;
 
     node_at_index->prev->next = node;
@@ -138,7 +127,7 @@ void* linked_list_remove_start(LinkedList* list)
 {
     if (!list || !list->head) return NULL;
 
-    Node* node = list->head;
+    DNode* node = list->head;
 
     if (--list->size == 0) {
         list->head = list->tail = NULL;
@@ -158,7 +147,7 @@ void* linked_list_remove_end(LinkedList* list)
 {
     if (!list || !list->tail) return NULL;
 
-    Node* node = list->tail;
+    DNode* node = list->tail;
 
     if (--list->size == 0) {
         list->head = list->tail = NULL;
@@ -183,7 +172,7 @@ void* linked_list_remove_at(LinkedList* list, unsigned int index)
     if (index == 0) return list->remove_start(list);
     if (index == list->size - 1) return list->remove_end(list);
 
-    Node* node = _find_node_at_index(list, index);
+    DNode* node = _find_node_at_index(list, index);
     if (!node) return NULL;
 
     node->prev->next = node->next;

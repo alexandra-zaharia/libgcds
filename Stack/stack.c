@@ -5,16 +5,6 @@
 #include <stdlib.h>
 #include "stack.h"
 
-// Creates and returns an Item* storing the designated data, or NULL in case of failure.
-Item* item_create(void* data)
-{
-    Item* item = malloc(sizeof(Item));
-    if (!item) return NULL;
-    item->data = data;
-    item->next = NULL;
-    return item;
-}
-
 // Frees the stack.
 void stack_free(Stack* stack)
 {

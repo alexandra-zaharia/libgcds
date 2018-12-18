@@ -6,13 +6,7 @@
 #define CDSLIB_QUEUE_H
 
 #include <stdbool.h>
-
-typedef struct Node Node;
-
-struct Node {
-    void *data;
-    Node *next;
-};
+#include "../node.h"
 
 typedef struct Queue Queue;
 

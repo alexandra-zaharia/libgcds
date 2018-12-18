@@ -6,20 +6,13 @@
 #define CDSLIB_LINKED_LIST_H
 
 #include <stdbool.h>
-
-typedef struct Node Node;
-
-struct Node {
-    void* data;
-    Node* next;
-    Node* prev;
-};
+#include "../node.h"
 
 typedef struct LinkedList LinkedList;
 
 struct LinkedList {
-    Node* head;                              // first node of the linked list
-    Node* tail;                              // last node of the linked list
+    DNode* head;                              // first node of the linked list
+    DNode* tail;                              // last node of the linked list
     unsigned int size;                       // number of items in the linked list
 
     void (*free)(LinkedList*);               // frees the linked list
