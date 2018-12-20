@@ -22,3 +22,7 @@ typedef struct {
   * `int vector_add(Vector *vector, void *item)` -- Adds the `item` at the end of the `vector`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
   * `int vector_insert(Vector *vector, void *item, unsigned int index)` -- Inserts the `item` to the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
   * `int vector_delete(Vector *vector, unsigned int index)` -- Deletes an item in the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
+
+For more details:
+  * [header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/Vector/vector.h)
+  * [implementation](https://github.com/alexandra-zaharia/libgcds/blob/master/src/Vector/vector.c)

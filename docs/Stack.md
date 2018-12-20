@@ -8,3 +8,7 @@ This is a generic stack implementation. A stack is a LIFO (last in, first out) d
   * `stack->is_empty(stack)` -- Returns `true` if the `stack` is empty, `false` otherwise.
   * `stack->push(stack, item)` -- Adds the `item` on top of the `stack`. Returns 0 on success and -1 on failure.
   * `stack->pop(stack)` -- Removes and returns the item on top of the `stack`. Returns `NULL` if the stack is null or empty.
+
+For more details:
+  * [header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/Stack/stack.h)
+  * [implementation](https://github.com/alexandra-zaharia/libgcds/blob/master/src/Stack/stack.c)

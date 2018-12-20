@@ -8,3 +8,7 @@ This is a generic queue implementation. A queue is a FIFO (first in, first out) 
   * `queueu->is_empty(queue)` -- Returns `true` if the `queue` is empty, `false` otherwise.
   * `queue->enqueue(queue, item)` -- Adds the `item` to the `queue`. Returns 0 on success and -1 on failure.
   * `queue->dequeue(queue)` -- Removes and returns the least recently added item of the `queue`. Returns `NULL` if the queue is null or empty.
+
+For more details:
+  * [header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/Queue/queue.h)
+  * [implementation](https://github.com/alexandra-zaharia/libgcds/blob/master/src/Queue/queue.c)
