@@ -14,7 +14,7 @@ More data structures will be added in the future.
 
 ## API
 
-The **API** of each data structure is detailed in the [documentation](https://github.com/alexandra-zaharia/libgcds/tree/master/docs).
+The API of each data structure is detailed in the [documentation](https://github.com/alexandra-zaharia/libgcds/tree/master/docs).
 
 The **TL;DR** API for a hypothetical `DataStructure` containing elements of type `Item*` is as follows:
 
@@ -25,10 +25,10 @@ Item* item = (Item*) ds->some_remove_operation(ds); // NULL if error
 ds->free(ds);
 ``` 
 
-Important notes
-  * The return codes for the different methods should be tested (e.g. above, `item` is null if the `some_remove_operation` failed, which may occur for instance if you try to remove items from an empty data structure).
+**Important notes:**
+  * The return codes for the different methods should be tested (e.g. above, `item` is null if `some_remove_operation` failed, which may occur for instance if you try to remove items from an empty data structure).
   * The data structures are dynamically allocated, and must therefore be `free`d through the provided `free` method.
-  * Since the library is generic, data structures store data as `void*`. Therefore whatever happens to your data after it has been added to a data structure will be reflected therein. This is also true if you store data of type `Item` in a data structure instead of `Item*` by calling `ds->some_add_operation(ds, &item)`. 
+  * Since the library is generic, data structures store data as `void*`. Therefore whatever happens to your data after it has been added to a data structure will be reflected therein. This is also true if you store data of type `Item` rather than `Item*` in a data structure by calling `ds->some_add_operation(ds, &item)`. 
   
 
 ## Examples
@@ -72,7 +72,7 @@ This results in copying the library's header files in the `include/` subdirector
 Simply include the required header files for your project, e.g. `#include "stack.h"` if you plan on using a `Stack`. For detailed information on the API of each data structure in `libgcds`, see the [documentation](https://github.com/alexandra-zaharia/libgcds/tree/master/docs).
 
 When compiling a program that uses `libgcds` you will need to:
-  * specify where the header files are located (`-I` for gcc);
+  * specify where the header files are located (`-I` for `gcc`);
   * specify the library search path (`-L` for `gcc`);
   * specify `gcds`, the library the linker needs to link with (`-l` for `gcc`).
 
