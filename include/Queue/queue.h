@@ -13,7 +13,7 @@ typedef struct Queue Queue;
 struct Queue {
     Node* first;                        // least recently added node
     Node* last;                         // most recently added node
-    unsigned int size;                  // number of items in the linked list
+    unsigned int size;                  // number of items in the queue
 
     void (*free)(Queue*);               // frees the queue
     bool (*is_empty)(Queue*);           // is the queue empty?
