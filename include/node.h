@@ -2,8 +2,8 @@
 // Created by Alexandra Zaharia on 18/12/18.
 //
 
-#ifndef CDSLIB_NODE_H
-#define CDSLIB_NODE_H
+#ifndef LIBGCDS_NODE_H
+#define LIBGCDS_NODE_H
 
 // Simply linked node: a node data structure with a pointer to the next element
 typedef struct Node Node;
@@ -14,6 +14,8 @@ struct Node {
     Node* next;
 };
 
+Node* node_create(void*);
+Item* item_create(void*);
 
 // Doubly linked node: a node data structure with a pointer to the next and previous elements
 typedef struct DNode DNode;
@@ -24,8 +26,6 @@ struct DNode {
     DNode* prev;
 };
 
-Node* node_create(void*);
-Item* item_create(void*);
 DNode* dnode_create(void*);
 
-#endif //CDSLIB_NODE_H
+#endif //LIBGCDS_NODE_H

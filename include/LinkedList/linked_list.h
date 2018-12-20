@@ -2,11 +2,11 @@
 // Created by Alexandra Zaharia on 13/12/18.
 //
 
-#ifndef CDSLIB_LINKED_LIST_H
-#define CDSLIB_LINKED_LIST_H
+#ifndef LIBGCDS_LINKED_LIST_H
+#define LIBGCDS_LINKED_LIST_H
 
 #include <stdbool.h>
-#include "../node.h"
+#include "node.h"
 
 typedef struct LinkedList LinkedList;
 
@@ -29,4 +29,4 @@ struct LinkedList {
 
 LinkedList* linked_list_create();
 
-#endif //CDSLIB_LINKED_LIST_H
+#endif //LIBGCDS_LINKED_LIST_H

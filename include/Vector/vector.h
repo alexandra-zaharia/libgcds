@@ -1,5 +1,5 @@
-#ifndef CDSLIB_VECTOR_H
-#define CDSLIB_VECTOR_H
+#ifndef LIBGCDS_VECTOR_H
+#define LIBGCDS_VECTOR_H
 
 #include <stdlib.h>
 
@@ -19,4 +19,4 @@ int vector_insert(Vector *vector, void *item, unsigned int index);
 int vector_delete(Vector *vector, unsigned int index);
 
 
-#endif // CDSLIB_VECTOR_H
+#endif //LIBGCDS_VECTOR_H

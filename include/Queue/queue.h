@@ -2,11 +2,11 @@
 // Created by Alexandra Zaharia on 17/12/18.
 //
 
-#ifndef CDSLIB_QUEUE_H
-#define CDSLIB_QUEUE_H
+#ifndef LIBGCDS_QUEUE_H
+#define LIBGCDS_QUEUE_H
 
 #include <stdbool.h>
-#include "../node.h"
+#include "node.h"
 
 typedef struct Queue Queue;
 
@@ -24,4 +24,4 @@ struct Queue {
 
 Queue* queue_create();
 
-#endif //CDSLIB_QUEUE_H
+#endif //LIBGCDS_QUEUE_H

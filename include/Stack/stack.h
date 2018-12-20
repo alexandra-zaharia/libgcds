@@ -2,11 +2,11 @@
 // Created by Alexandra Zaharia on 13/12/18.
 //
 
-#ifndef CDSLIB_STACK_H
-#define CDSLIB_STACK_H
+#ifndef LIBGCDS_STACK_H
+#define LIBGCDS_STACK_H
 
 #include <stdbool.h>
-#include "../node.h"
+#include "node.h"
 
 typedef struct Stack Stack;
 
@@ -23,4 +23,4 @@ struct Stack {
 
 Stack* stack_create();
 
-#endif //CDSLIB_STACK_H
+#endif //LIBGCDS_STACK_H
