@@ -8,7 +8,7 @@
 #define INT_EQ(x, y) assert_int_equal((x), *((int *) vector->data[(y)]))
 
 
-/* Fixture setup: creates a Vector. */
+// Fixture setup: creates a Vector.
 static int setup_vector(void **state)
 {
     Vector *vector = vector_create();
@@ -17,7 +17,7 @@ static int setup_vector(void **state)
     return 0;
 }
 
-/* Fixture teardown: frees a Vector. */
+// Fixture teardown: frees a Vector.
 static int teardown_vector(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -27,7 +27,7 @@ static int teardown_vector(void **state)
 
 char *str_value;
 
-/* Fixture setup: initializes a string. */
+// Fixture setup: initializes a string.
 static int setup_string()
 {
     str_value = (char *)malloc(strlen("a string") + 1);
@@ -37,7 +37,7 @@ static int setup_string()
     return 0;
 }
 
-/* Fixture teardown: frees a string. */
+// Fixture teardown: frees a string.
 static int teardown_string()
 {
     if (!str_value)
@@ -48,7 +48,7 @@ static int teardown_string()
 
 int *values;
 
-/* Fixture setup: initializes array of integers. */
+// Fixture setup: initializes array of integers.
 static int setup_values()
 {
     values = (int *)malloc(10 * sizeof(int));
@@ -58,7 +58,7 @@ static int setup_values()
     return 0;
 }
 
-/* Fixture teardown: frees array of integers. */
+// Fixture teardown: frees array of integers.
 static int teardown_values()
 {
     assert_non_null(values);
@@ -66,8 +66,7 @@ static int teardown_values()
     return 0;
 }
 
-/* Ensure that the given Vector has all the (integer) elements transmitted as
- * arguments, in order. */
+// Ensure that the given Vector has all the (integer) elements transmitted as arguments, in order.
 void assert_vector(Vector *vector, int size, ...)
 {
     va_list args;
@@ -77,7 +76,7 @@ void assert_vector(Vector *vector, int size, ...)
     va_end(args);
 }
 
-/* Ensure that a new Vector is not NULL, has size 0 and default capacity. */
+// Ensure that a new Vector is not NULL, has size 0 and default capacity.
 static void test_vector_creation(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -87,8 +86,7 @@ static void test_vector_creation(void **state)
     *state = vector;
 }
 
-/* Ensure that a Vector doubles its capacity when it has no more free slots
- * when using vector_add(). */
+// Ensure that a Vector doubles its capacity when it has no more free slots when using vector_add().
 static void test_vector_double_capacity_add(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -109,8 +107,10 @@ static void test_vector_double_capacity_add(void **state)
     *state = vector;
 }
 
-/* Ensure that a Vector doubles its capacity when it has no more free slots
- * when using vector_insert(). */
+/*
+ * Ensure that a Vector doubles its capacity when it has no more free slots when using
+ * vector_insert().
+ */
 static void test_vector_double_capacity_insert(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -131,9 +131,7 @@ static void test_vector_double_capacity_insert(void **state)
     *state = vector;
 }
 
-/* Ensure that a Vector decreases its capacity by a factor of 2 when half of its
- * slots become free.
- */
+// Ensure that a Vector decreases its capacity by a factor of 2 when half of its slots become free.
 static void test_vector_half_capacity(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -154,7 +152,7 @@ static void test_vector_half_capacity(void **state)
     *state = vector;
 }
 
-/* Ensure that adding to a NULL Vector or Vector data results in failure. */
+// Ensure that adding to a NULL Vector or Vector data results in failure.
 static void test_vector_add_fail_null()
 {
     int value = 5;
@@ -169,7 +167,7 @@ static void test_vector_add_fail_null()
     vector_free(v);
 }
 
-/* Ensure that a NULL item can be added to a Vector. */
+// Ensure that a NULL item can be added to a Vector.
 static void test_vector_add_null(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -183,7 +181,7 @@ static void test_vector_add_null(void **state)
     *state = vector;
 }
 
-/* Ensure that an integer can be added to a Vector. */
+// Ensure that an integer can be added to a Vector.
 static void test_vector_add_int(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -198,7 +196,7 @@ static void test_vector_add_int(void **state)
     *state = vector;
 }
 
-/* Ensure that a double can be added to a Vector. */
+// Ensure that a double can be added to a Vector.
 static void test_vector_add_double(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -214,7 +212,7 @@ static void test_vector_add_double(void **state)
     *state = vector;
 }
 
-/* Ensure that a string can be added to a Vector. */
+// Ensure that a string can be added to a Vector.
 static void test_vector_add_string(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -229,7 +227,7 @@ static void test_vector_add_string(void **state)
     *state = vector;
 }
 
-/* Ensure that a user-defined data structure can be added to a Vector. */
+// Ensure that a user-defined data structure can be added to a Vector.
 static void test_vector_add_struct(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -253,7 +251,7 @@ static void test_vector_add_struct(void **state)
     *state = vector;
 }
 
-/* Ensure that insertion into NULL Vector or Vector data results in failure. */
+// Ensure that insertion into NULL Vector or Vector data results in failure.
 static void test_vector_insert_fail_null()
 {
     int value = 7;
@@ -268,7 +266,7 @@ static void test_vector_insert_fail_null()
     vector_free(v);
 }
 
-/* Ensure that insertion with invalid indexes results in failure. */
+// Ensure that insertion with invalid indexes results in failure.
 static void test_vector_insert_fail_nonnull(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -281,7 +279,7 @@ static void test_vector_insert_fail_nonnull(void **state)
     *state = vector;
 }
 
-/* Ensure that a NULL item can be inserted in a Vector at a specified index. */
+// Ensure that a NULL item can be inserted in a Vector at a specified index.
 static void test_vector_insert_null(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -295,7 +293,7 @@ static void test_vector_insert_null(void **state)
     *state = vector;
 }
 
-/* Ensure that an integer can be inserted in a Vector at a specified index. */
+// Ensure that an integer can be inserted in a Vector at a specified index.
 static void test_vector_insert_int(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -310,7 +308,7 @@ static void test_vector_insert_int(void **state)
     *state = vector;
 }
 
-/* Ensure that a double can be inserted in a Vector at a specified index. */
+// Ensure that a double can be inserted in a Vector at a specified index.
 static void test_vector_insert_double(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -326,7 +324,7 @@ static void test_vector_insert_double(void **state)
     *state = vector;
 }
 
-/* Ensure that a string can be inserted in a Vector at a specified index. */
+// Ensure that a string can be inserted in a Vector at a specified index.
 static void test_vector_insert_string(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -341,8 +339,7 @@ static void test_vector_insert_string(void **state)
     *state = vector;
 }
 
-/* Ensure that a user-defined data structure can be inserted in a Vector at a
- * specified index. */
+// Ensure that a user-defined data structure can be inserted in a Vector at a specified index.
 static void test_vector_insert_struct(void **state)
 {
     Vector *vector = (Vector *) *state;
@@ -366,7 +363,7 @@ static void test_vector_insert_struct(void **state)
     *state = vector;
 }
 
-/* Setup fixture for inserting into a vector with 1 item. */
+// Setup fixture for inserting into a vector with 1 item.
 static int setup_vector_ins_count_1(void **state)
 {
     Vector *vector = vector_create();
@@ -378,7 +375,7 @@ static int setup_vector_ins_count_1(void **state)
     return 0;
 }
 
-/* Setup fixture for inserting into a vector with 2 items. */
+// Setup fixture for inserting into a vector with 2 items.
 static int setup_vector_ins_count_2(void **state)
 {
     setup_vector_ins_count_1(state);
@@ -391,7 +388,7 @@ static int setup_vector_ins_count_2(void **state)
     return 0;
 }
 
-/* Setup fixture for inserting into a vector with 3 items. */
+// Setup fixture for inserting into a vector with 3 items.
 static int setup_vector_ins_count_3(void **state)
 {
     setup_vector_ins_count_2(state);
@@ -404,7 +401,7 @@ static int setup_vector_ins_count_3(void **state)
     return 0;
 }
 
-/* Setup fixture for inserting into a vector with 4 items. */
+// Setup fixture for inserting into a vector with 4 items.
 static int setup_vector_ins_count_4(void **state)
 {
     setup_vector_ins_count_3(state);
@@ -417,7 +414,7 @@ static int setup_vector_ins_count_4(void **state)
     return 0;
 }
 
-/* Setup fixture for inserting into a vector with 5 items. */
+// Setup fixture for inserting into a vector with 5 items.
 static int setup_vector_ins_count_5(void **state)
 {
     setup_vector_ins_count_4(state);
@@ -430,7 +427,7 @@ static int setup_vector_ins_count_5(void **state)
     return 0;
 }
 
-/* Setup fixture for inserting into a vector with 6 items. */
+// Setup fixture for inserting into a vector with 6 items.
 static int setup_vector_ins_count_6(void **state)
 {
     setup_vector_ins_count_5(state);
@@ -443,7 +440,7 @@ static int setup_vector_ins_count_6(void **state)
     return 0;
 }
 
-/* Setup fixture for inserting into a vector with 7 items. */
+// Setup fixture for inserting into a vector with 7 items.
 static int setup_vector_ins_count_7(void **state)
 {
     setup_vector_ins_count_6(state);
@@ -456,7 +453,7 @@ static int setup_vector_ins_count_7(void **state)
     return 0;
 }
 
-/* Setup fixture for inserting into a vector with 8 items. */
+// Setup fixture for inserting into a vector with 8 items.
 static int setup_vector_ins_count_8(void **state)
 {
     setup_vector_ins_count_7(state);
@@ -469,8 +466,8 @@ static int setup_vector_ins_count_8(void **state)
     return 0;
 }
 
-/* Ensures that integer 9 can be inserted at index 0 when the Vector has no
- * item.
+/*
+ * Ensures that integer 9 can be inserted at index 0 when the Vector has no item.
  * Vector before insertion: [ ]
  * Vector after  insertion: [ 9 ]
  */
@@ -487,7 +484,8 @@ static void test_vector_insert_item_9_index_0(void **state)
     *state = vector;
 }
 
-/* Ensures that integer 8 can be inserted at index 0 when the Vector has 1 item.
+/*
+ * Ensures that integer 8 can be inserted at index 0 when the Vector has 1 item.
  * Vector before insertion: [ 9 ]
  * Vector after  insertion: [ 8 9 ]
  */
@@ -504,8 +502,8 @@ static void test_vector_insert_item_8_index_0(void **state)
     *state = vector;
 }
 
-/* Ensures that integer 7 can be inserted at index 2 when the Vector has 2
- * items.
+/*
+ * Ensures that integer 7 can be inserted at index 2 when the Vector has 2 items.
  * Vector before insertion: [ 8 9 ]
  * Vector after  insertion: [ 8 9 7 ]
  */
@@ -522,8 +520,8 @@ static void test_vector_insert_item_7_index_2(void **state)
     *state = vector;
 }
 
-/* Ensures that integer 6 can be inserted at index 1 when the Vector has 3
- * items.
+/*
+ * Ensures that integer 6 can be inserted at index 1 when the Vector has 3 items.
  * Vector before insertion: [ 8 9 7 ]
  * Vector after  insertion: [ 8 6 9 7 ]
  */
@@ -540,8 +538,8 @@ static void test_vector_insert_item_6_index_1(void **state)
     *state = vector;
 }
 
-/* Ensures that integer 0 can be inserted at index 4 when the Vector has 4
- * items.
+/*
+ * Ensures that integer 0 can be inserted at index 4 when the Vector has 4 items.
  * Vector before insertion: [ 8 6 9 7 ]
  * Vector after  insertion: [ 8 6 9 7 0 ]
 */
@@ -558,8 +556,8 @@ static void test_vector_insert_item_0_index_4(void **state)
     *state = vector;
 }
 
-/* Ensures that integer 3 can be inserted at index 3 when the Vector has 5
- * items.
+/*
+ * Ensures that integer 3 can be inserted at index 3 when the Vector has 5 items.
  * Vector before insertion: [ 8 6 9 7 0 ]
  * Vector after  insertion: [ 8 6 9 3 7 0 ]
 */
@@ -576,8 +574,8 @@ static void test_vector_insert_item_3_index_3(void **state)
     *state = vector;
 }
 
-/* Ensures that integer 1 can be inserted at index 1 when the Vector has 6
- * items.
+/*
+ * Ensures that integer 1 can be inserted at index 1 when the Vector has 6 items.
  * Vector before insertion: [ 8 6 9 3 7 0 ]
  * Vector after  insertion: [ 8 1 6 9 3 7 0 ]
 */
@@ -594,8 +592,8 @@ static void test_vector_insert_item_1_index_1(void **state)
     *state = vector;
 }
 
-/* Ensures that integer 5 can be inserted at index 6 when the Vector has 7
- * items.
+/*
+ * Ensures that integer 5 can be inserted at index 6 when the Vector has 7 items.
  * Vector before insertion: [ 8 1 6 9 3 7 0 ]
  * Vector after  insertion: [ 8 1 6 9 3 7 5 0 ]
 */
@@ -612,8 +610,8 @@ static void test_vector_insert_item_5_index_6(void **state)
     *state = vector;
 }
 
-/* Ensures that integer 2 can be inserted at index 8 when the Vector has 8
- * items.
+/*
+ * Ensures that integer 2 can be inserted at index 8 when the Vector has 8 items.
  * Vector before insertion: [ 8 1 6 9 3 7 5 0 ]
  * Vector after  insertion: [ 8 1 6 9 3 7 5 0 2 ]
 */
@@ -630,7 +628,7 @@ static void test_vector_insert_item_2_index_8(void **state)
     *state = vector;
 }
 
-/* Setup fixture for deleting from a vector with 9 items. */
+// Setup fixture for deleting from a vector with 9 items.
 static int setup_vector_delete(void **state)
 {
     setup_vector_ins_count_8(state);
@@ -643,7 +641,7 @@ static int setup_vector_delete(void **state)
     return 0;
 }
 
-/* Ensures that deletion from a Vector with 9 items works as expected. */
+// Ensures that deletion from a Vector with 9 items works as expected. 
 static void test_vector_delete(void **state)
 {
     Vector *vector = (Vector *) *state;

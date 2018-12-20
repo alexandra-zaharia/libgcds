@@ -169,7 +169,7 @@ static void test_linked_list_delete_at(void** state)
         int value = *((int*) list->remove_at(list, 5));
         assert_int_equal(value, i);
         assert_false(list->is_empty(list));
-        assert_int_equal(list->size, 10 - i + 4); // 59 68 76 86 95
+        assert_int_equal(list->size, 10 - i + 4);
     }
 
     value = list->remove_at(list, 2);

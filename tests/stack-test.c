@@ -33,6 +33,7 @@ int values[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 // Tests -----------------------------------------------------------------------
 
+// Tests stack creation
 static void test_stack_create(void **state)
 {
     Stack* stack = (Stack*) *state;
@@ -40,6 +41,7 @@ static void test_stack_create(void **state)
     *state = stack;
 }
 
+// Tests whether the stack is empty upon creation
 static void test_stack_is_empty(void **state)
 {
     Stack* stack = (Stack*) *state;
@@ -47,6 +49,7 @@ static void test_stack_is_empty(void **state)
     *state = stack;
 }
 
+// Tests insertion in the stack
 static void test_stack_push(void **state)
 {
     Stack* stack = (Stack*) *state;
@@ -64,6 +67,7 @@ static void test_stack_push(void **state)
     *state = stack;
 }
 
+// Tests removal from the stack
 static void test_stack_pop(void **state)
 {
     Stack* stack = (Stack*) *state;

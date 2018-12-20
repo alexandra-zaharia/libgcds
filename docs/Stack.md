@@ -1,6 +1,6 @@
 # Generic stack implementation
 
-This is a generic stack implementation. A stack is a LIFO (last in, first out) data structure that supports two main operations: adding data on top of the stack (`push`) and retrieving the topmost item on the stack (`pop`). Additionally, it should be possible to know a stack's `size` and whether it `is_empty`. 
+This is a generic stack implementation. A stack is a LIFO (last in, first out) data structure that supports two main operations: adding data on top of the stack (`push`) and retrieving the topmost item on the stack (`pop`). Additionally, it should be possible to know a `size` of a stack and whether it `is_empty`. 
 
 `Stack` has the following API:
   * `Stack* stack_create()` -- Creates a new `Stack` and returns a pointer to it, or `NULL` in case of failure.

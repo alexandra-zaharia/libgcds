@@ -33,6 +33,7 @@ int values[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 // Tests -----------------------------------------------------------------------
 
+// Tests queue creation
 static void test_queue_create(void **state)
 {
     Queue* queue = (Queue*) *state;
@@ -40,6 +41,7 @@ static void test_queue_create(void **state)
     *state = queue;
 }
 
+// Tests whether the queue is empty upon creation
 static void test_queue_is_empty(void **state)
 {
     Queue* queue = (Queue*) *state;
@@ -47,6 +49,7 @@ static void test_queue_is_empty(void **state)
     *state = queue;
 }
 
+// Tests insertion in the queue
 static void test_queue_enqueue(void **state)
 {
     Queue* queue = (Queue*) *state;
@@ -64,6 +67,7 @@ static void test_queue_enqueue(void **state)
     *state = queue;
 }
 
+// Tests removal from the queue
 static void test_queue_dequeue(void **state)
 {
     Queue* queue = (Queue*) *state;

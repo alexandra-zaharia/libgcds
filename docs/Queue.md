@@ -5,7 +5,7 @@ This is a generic queue implementation. A queue is a FIFO (first in, first out) 
 `Queue` has the following API:
   * `Queue* queue_create()` -- Creates a new `Queue` and returns a pointer to it, or `NULL` in case of failure.
   * `queue->free(queue)` -- Frees the given `queue`.
-  * `queueu->is_empty(queue)` -- Returns `true` if the `queue` is empty, `false` otherwise.
+  * `queue->is_empty(queue)` -- Returns `true` if the `queue` is empty, `false` otherwise.
   * `queue->enqueue(queue, item)` -- Adds the `item` to the `queue`. Returns 0 on success and -1 on failure.
   * `queue->dequeue(queue)` -- Removes and returns the least recently added item of the `queue`. Returns `NULL` if the queue is null or empty.
 

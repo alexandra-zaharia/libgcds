@@ -11,8 +11,8 @@
 typedef struct LinkedList LinkedList;
 
 struct LinkedList {
-    DNode* head;                              // first node of the linked list
-    DNode* tail;                              // last node of the linked list
+    DNode* head;                             // first node of the linked list
+    DNode* tail;                             // last node of the linked list
     unsigned int size;                       // number of items in the linked list
 
     void (*free)(LinkedList*);               // frees the linked list
