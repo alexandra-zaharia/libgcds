@@ -5,10 +5,10 @@
 ## Data structures 
 
 For the moment, `libgcds` features the following data structures:
-  * [`LinkedList`](https://github.com/alexandra-zaharia/gcdslib/blob/master/docs/LinkedList.md) -- A doubly linked list implementation accepting insertion and removal operations at the beginning, at the end, or at a specified index in the linked list.
-  * [`Queue`](https://github.com/alexandra-zaharia/gcdslib/blob/master/docs/Queue.md) -- A queue implementation accepting `enqueue` and `dequeue` operations.
-  * [`Stack`](https://github.com/alexandra-zaharia/gcdslib/blob/master/docs/Stack.md) -- A stack implementation accepting `push` and `pop` operations.
-  * [`Vector`](https://github.com/alexandra-zaharia/gcdslib/blob/master/docs/Vector.md) -- A vector implementation using an underlying resizing array.
+  * [`LinkedList`](https://github.com/alexandra-zaharia/libgcds/blob/master/docs/LinkedList.md) -- A doubly linked list implementation accepting insertion and removal operations at the beginning, at the end, or at a specified index in the linked list.
+  * [`Queue`](https://github.com/alexandra-zaharia/libgcds/blob/master/docs/Queue.md) -- A queue implementation accepting `enqueue` and `dequeue` operations.
+  * [`Stack`](https://github.com/alexandra-zaharia/libgcds/blob/master/docs/Stack.md) -- A stack implementation accepting `push` and `pop` operations.
+  * [`Vector`](https://github.com/alexandra-zaharia/libgcds/blob/master/docs/Vector.md) -- A vector implementation using an underlying resizing array.
   
 More data structures will be added in the future.
 
@@ -36,13 +36,13 @@ You will need `cmake` and `make` to build a static `libgcds.a` library that can 
 First, clone the `libgcds` repository:
 
 ```bash
-git clone https://github.com/alexandra-zaharia/libgcsd.git
+git clone https://github.com/alexandra-zaharia/libgcds.git
 ``` 
 
 Then, create a build directory for CMake and `cd` into it:
 
 ```bash
-cd libgscd
+cd libgcds
 mkdir build
 cd build
 ```
