@@ -46,7 +46,7 @@ int stack_push(Stack* stack, void* data)
     return 0;
 }
 
-// Removes and returns the item on top of the stack.
+// Removes and returns the item on top of the stack, or NULL in case of failure.
 void* stack_pop(Stack* stack)
 {
     if (!stack || !stack->top) return NULL;

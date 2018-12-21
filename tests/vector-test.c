@@ -1,9 +1,10 @@
-#include "vector.h"
 #include <stdarg.h>
 #include <stddef.h>
 #include <setjmp.h>
 #include <string.h>
 #include <cmocka.h>
+#include <stdlib.h>
+#include "vector.h"
 
 #define INT_EQ(x, y) assert_int_equal((x), *((int *) vector->data[(y)]))
 
@@ -11,7 +12,7 @@
 // Fixture setup: creates a Vector.
 static int setup_vector(void **state)
 {
-    Vector *vector = vector_create();
+    Vector* vector = vector_create();
     assert_non_null(vector);
     *state = vector;
     return 0;
@@ -20,8 +21,8 @@ static int setup_vector(void **state)
 // Fixture teardown: frees a Vector.
 static int teardown_vector(void **state)
 {
-    Vector *vector = (Vector *) *state;
-    vector_free(vector);
+    Vector* vector = (Vector*) *state;
+    vector->free(vector);
     return 0;
 }
 
@@ -67,7 +68,7 @@ static int teardown_values()
 }
 
 // Ensure that the given Vector has all the (integer) elements transmitted as arguments, in order.
-void assert_vector(Vector *vector, int size, ...)
+void assert_vector(Vector* vector, int size, ...)
 {
     va_list args;
     va_start(args, size);
@@ -79,9 +80,9 @@ void assert_vector(Vector *vector, int size, ...)
 // Ensure that a new Vector is not NULL, has size 0 and default capacity.
 static void test_vector_creation(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
-    assert_int_equal((int) vector->count, 0);
+    assert_int_equal((int) vector->size, 0);
     assert_int_equal((int) vector->capacity, VECTOR_INIT_CAPACITY);
     *state = vector;
 }
@@ -89,11 +90,11 @@ static void test_vector_creation(void **state)
 // Ensure that a Vector doubles its capacity when it has no more free slots when using vector_add().
 static void test_vector_double_capacity_add(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
     for (int i = 1; i <= 65; i++) {
-        assert_int_equal(vector_add(vector, &i), 0);
+        assert_int_equal(vector->add(vector, &i), 0);
         int capacity = (int) vector->capacity;
 
         if (i <= 4) assert_int_equal(capacity, 4);
@@ -109,15 +110,15 @@ static void test_vector_double_capacity_add(void **state)
 
 /*
  * Ensure that a Vector doubles its capacity when it has no more free slots when using
- * vector_insert().
+ * vector->insert().
  */
 static void test_vector_double_capacity_insert(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
     for (int i = 1; i <= 65; i++) {
-        assert_int_equal(vector_insert(vector, &i, 0), 0);
+        assert_int_equal(vector->insert(vector, &i, 0), 0);
         int capacity = (int) vector->capacity;
 
         if (i <= 4) assert_int_equal(capacity, 4);
@@ -134,11 +135,11 @@ static void test_vector_double_capacity_insert(void **state)
 // Ensure that a Vector decreases its capacity by a factor of 2 when half of its slots become free.
 static void test_vector_half_capacity(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
     for (int i = 64; i >= 0; i--) {
-        assert_int_equal(vector_delete(vector, 0), 0);
+        assert_non_null(vector->remove(vector, 0));
         int capacity = (int) vector->capacity;
 
         if (i > 32) assert_int_equal(capacity, 128);
@@ -156,27 +157,27 @@ static void test_vector_half_capacity(void **state)
 static void test_vector_add_fail_null()
 {
     int value = 5;
-    assert_int_equal(vector_add(NULL, &value), -1);
 
-    Vector *v = vector_create();
-    assert_non_null(v);
-    free(v->data);
-    v->data = NULL;
+    Vector* vector = vector_create();
+    assert_non_null(vector);
+    assert_int_equal(vector->add(NULL, &value), -1);
+    free(vector->data);
+    vector->data = NULL;
 
-    assert_int_equal(vector_add(v, &value), -1);
-    vector_free(v);
+    assert_int_equal(vector->add(vector, &value), -1);
+    vector->free(vector);
 }
 
 // Ensure that a NULL item can be added to a Vector.
 static void test_vector_add_null(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    int count = (int) vector->count;
-    assert_int_equal(vector_add(vector, NULL), 0);
-    assert_int_equal((int) vector->count, count + 1);
-    assert_null(vector->data[vector->count - 1]);
+    int size = (int) vector->size;
+    assert_int_equal(vector->add(vector, NULL), 0);
+    assert_int_equal((int) vector->size, size + 1);
+    assert_null(vector->data[vector->size - 1]);
 
     *state = vector;
 }
@@ -184,14 +185,14 @@ static void test_vector_add_null(void **state)
 // Ensure that an integer can be added to a Vector.
 static void test_vector_add_int(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
     int value = 5;
-    int count = (int) vector->count;
+    int size = (int) vector->size;
 
-    assert_int_equal(vector_add(vector, &value), 0);
-    assert_int_equal((int) vector->count, count + 1);
-    INT_EQ(value, vector->count - 1);
+    assert_int_equal(vector->add(vector, &value), 0);
+    assert_int_equal((int) vector->size, size + 1);
+    INT_EQ(value, vector->size - 1);
 
     *state = vector;
 }
@@ -199,14 +200,15 @@ static void test_vector_add_int(void **state)
 // Ensure that a double can be added to a Vector.
 static void test_vector_add_double(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
     double value = 567890.0123456789;
-    int count = (int) vector->count;
+    int size = (int) vector->size;
 
-    assert_int_equal(vector_add(vector, &value), 0);
-    assert_int_equal((int) vector->count, count + 1);
-    double *item = (double *) vector->data[vector->count - 1];
+    assert_int_equal(vector->add(vector, &value), 0);
+    assert_int_equal((int) vector->size, size + 1);
+    double *item = (double *) vector->data[vector->size- 1];
+    assert_non_null(item);
     assert_true(value == *item);
 
     *state = vector;
@@ -215,13 +217,14 @@ static void test_vector_add_double(void **state)
 // Ensure that a string can be added to a Vector.
 static void test_vector_add_string(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
-    int count = (int) vector->count;
+    int size = (int) vector->size;
 
-    assert_int_equal(vector_add(vector, str_value), 0);
-    assert_int_equal((int) vector->count, count + 1);
-    char *item = (char *) vector->data[vector->count - 1];
+    assert_int_equal(vector->add(vector, str_value), 0);
+    assert_int_equal((int) vector->size, size + 1);
+    char *item = (char *) vector->data[vector->size - 1];
+    assert_non_null(item);
     assert_string_equal(str_value, item);
 
     *state = vector;
@@ -230,7 +233,7 @@ static void test_vector_add_string(void **state)
 // Ensure that a user-defined data structure can be added to a Vector.
 static void test_vector_add_struct(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
     typedef struct {
@@ -239,12 +242,13 @@ static void test_vector_add_struct(void **state)
     } Point;
 
     Point value = {.x = 5, .y = 5};
-    int count = (int) vector->count;
+    int size = (int) vector->size;
 
-    assert_int_equal(vector_add(vector, &value), 0);
-    assert_int_equal((int) vector->count, count + 1);
+    assert_int_equal(vector->add(vector, &value), 0);
+    assert_int_equal((int) vector->size, size + 1);
 
-    Point *item = (Point *) vector->data[vector->count - 1];
+    Point *item = (Point *) vector->data[vector->size - 1];
+    assert_non_null(item);
     assert_true(&value == item);
     assert_true(value.x == item->x && value.y == item->y);
 
@@ -255,26 +259,26 @@ static void test_vector_add_struct(void **state)
 static void test_vector_insert_fail_null()
 {
     int value = 7;
-    assert_int_equal(vector_insert(NULL, &value, 0), -1);
 
-    Vector *v = vector_create();
-    assert_non_null(v);
-    free(v->data);
-    v->data = NULL;
+    Vector* vector = vector_create();
+    assert_non_null(vector);
+    assert_int_equal(vector->insert(NULL, &value, 0), -1);
+    free(vector->data);
+    vector->data = NULL;
 
-    assert_int_equal(vector_insert(v, &value, 0), -1);
-    vector_free(v);
+    assert_int_equal(vector->insert(vector, &value, 0), -1);
+    vector->free(vector);
 }
 
 // Ensure that insertion with invalid indexes results in failure.
 static void test_vector_insert_fail_nonnull(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
     int value = 7;
-    assert_int_equal(vector_insert(vector, &value, -1), -1);
-    assert_int_equal(vector_insert(vector, &value, 1), -1);
+    assert_int_equal(vector->insert(vector, &value, -1), -1);
+    assert_int_equal(vector->insert(vector, &value, 1), -1);
 
     *state = vector;
 }
@@ -282,13 +286,13 @@ static void test_vector_insert_fail_nonnull(void **state)
 // Ensure that a NULL item can be inserted in a Vector at a specified index.
 static void test_vector_insert_null(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
-    int count = (int) vector->count;
+    int size = (int) vector->size;
 
-    assert_int_equal(vector_insert(vector, NULL, 0), 0);
-    assert_int_equal((int) vector->count, count + 1);
-    assert_null(vector->data[vector->count - 1]);
+    assert_int_equal(vector->insert(vector, NULL, 0), 0);
+    assert_int_equal((int) vector->size, size + 1);
+    assert_null(vector->data[vector->size - 1]);
 
     *state = vector;
 }
@@ -296,13 +300,13 @@ static void test_vector_insert_null(void **state)
 // Ensure that an integer can be inserted in a Vector at a specified index.
 static void test_vector_insert_int(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
     int value = 7;
-    int count = (int) vector->count;
+    int size = (int) vector->size;
 
-    assert_int_equal(vector_insert(vector, &value, 0), 0);
-    assert_int_equal((int) vector->count, count + 1);
+    assert_int_equal(vector->insert(vector, &value, 0), 0);
+    assert_int_equal((int) vector->size, size + 1);
     INT_EQ(value, 0);
 
     *state = vector;
@@ -311,14 +315,15 @@ static void test_vector_insert_int(void **state)
 // Ensure that a double can be inserted in a Vector at a specified index.
 static void test_vector_insert_double(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
     double value = 567890.0123456789;
-    int count = (int) vector->count;
+    int size = (int) vector->size;
 
-    assert_int_equal(vector_insert(vector, &value, 0), 0);
-    assert_int_equal((int) vector->count, count + 1);
+    assert_int_equal(vector->insert(vector, &value, 0), 0);
+    assert_int_equal((int) vector->size, size + 1);
     double *item = (double *) vector->data[0];
+    assert_non_null(item);
     assert_true(value == *item);
 
     *state = vector;
@@ -327,13 +332,14 @@ static void test_vector_insert_double(void **state)
 // Ensure that a string can be inserted in a Vector at a specified index.
 static void test_vector_insert_string(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
-    int count = (int) vector->count;
+    int size = (int) vector->size;
 
-    assert_int_equal(vector_insert(vector, str_value, 0), 0);
-    assert_int_equal((int) vector->count, count + 1);
+    assert_int_equal(vector->insert(vector, str_value, 0), 0);
+    assert_int_equal((int) vector->size, size + 1);
     char *item = (char *) vector->data[0];
+    assert_non_null(item);
     assert_string_equal(str_value, item);
 
     *state = vector;
@@ -342,7 +348,7 @@ static void test_vector_insert_string(void **state)
 // Ensure that a user-defined data structure can be inserted in a Vector at a specified index.
 static void test_vector_insert_struct(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
     typedef struct {
@@ -351,12 +357,13 @@ static void test_vector_insert_struct(void **state)
     } Point;
 
     Point value = {.x = 5, .y = 5};
-    int count = (int) vector->count;
+    int size = (int) vector->size;
 
-    assert_int_equal(vector_insert(vector, &value, 0), 0);
-    assert_int_equal((int) vector->count, count + 1);
+    assert_int_equal(vector->insert(vector, &value, 0), 0);
+    assert_int_equal((int) vector->size, size + 1);
 
     Point *item = (Point *) vector->data[0];
+    assert_non_null(item);
     assert_true(&value == item);
     assert_true(value.x == item->x && value.y == item->y);
 
@@ -366,10 +373,10 @@ static void test_vector_insert_struct(void **state)
 // Setup fixture for inserting into a vector with 1 item.
 static int setup_vector_ins_count_1(void **state)
 {
-    Vector *vector = vector_create();
+    Vector* vector = vector_create();
     assert_non_null(vector);
 
-    assert_int_equal(vector_add(vector, &values[9]), 0);
+    assert_int_equal(vector->add(vector, &values[9]), 0);
     *state = vector;
 
     return 0;
@@ -379,10 +386,10 @@ static int setup_vector_ins_count_1(void **state)
 static int setup_vector_ins_count_2(void **state)
 {
     setup_vector_ins_count_1(state);
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[8], 0), 0);
+    assert_int_equal(vector->insert(vector, &values[8], 0), 0);
     *state = vector;
 
     return 0;
@@ -392,10 +399,10 @@ static int setup_vector_ins_count_2(void **state)
 static int setup_vector_ins_count_3(void **state)
 {
     setup_vector_ins_count_2(state);
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[7], 2), 0);
+    assert_int_equal(vector->insert(vector, &values[7], 2), 0);
     *state = vector;
 
     return 0;
@@ -405,10 +412,10 @@ static int setup_vector_ins_count_3(void **state)
 static int setup_vector_ins_count_4(void **state)
 {
     setup_vector_ins_count_3(state);
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[6], 1), 0);
+    assert_int_equal(vector->insert(vector, &values[6], 1), 0);
     *state = vector;
 
     return 0;
@@ -418,10 +425,10 @@ static int setup_vector_ins_count_4(void **state)
 static int setup_vector_ins_count_5(void **state)
 {
     setup_vector_ins_count_4(state);
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[0], 4), 0);
+    assert_int_equal(vector->insert(vector, &values[0], 4), 0);
     *state = vector;
 
     return 0;
@@ -431,10 +438,10 @@ static int setup_vector_ins_count_5(void **state)
 static int setup_vector_ins_count_6(void **state)
 {
     setup_vector_ins_count_5(state);
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[3], 3), 0);
+    assert_int_equal(vector->insert(vector, &values[3], 3), 0);
     *state = vector;
 
     return 0;
@@ -444,10 +451,10 @@ static int setup_vector_ins_count_6(void **state)
 static int setup_vector_ins_count_7(void **state)
 {
     setup_vector_ins_count_6(state);
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[1], 1), 0);
+    assert_int_equal(vector->insert(vector, &values[1], 1), 0);
     *state = vector;
 
     return 0;
@@ -457,10 +464,10 @@ static int setup_vector_ins_count_7(void **state)
 static int setup_vector_ins_count_8(void **state)
 {
     setup_vector_ins_count_7(state);
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[5], 6), 0);
+    assert_int_equal(vector->insert(vector, &values[5], 6), 0);
     *state = vector;
 
     return 0;
@@ -473,11 +480,11 @@ static int setup_vector_ins_count_8(void **state)
  */
 static void test_vector_insert_item_9_index_0(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[9], 0), 0);
-    assert_int_equal((int) vector->count, 1);
+    assert_int_equal(vector->insert(vector, &values[9], 0), 0);
+    assert_int_equal((int) vector->size, 1);
     assert_int_equal((int) vector->capacity, VECTOR_INIT_CAPACITY);
     assert_vector(vector, 1, 9);
 
@@ -491,11 +498,11 @@ static void test_vector_insert_item_9_index_0(void **state)
  */
 static void test_vector_insert_item_8_index_0(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[8], 0), 0);
-    assert_int_equal((int) vector->count, 2);
+    assert_int_equal(vector->insert(vector, &values[8], 0), 0);
+    assert_int_equal((int) vector->size, 2);
     assert_int_equal((int) vector->capacity, VECTOR_INIT_CAPACITY);
     assert_vector(vector, 2, 8, 9);
 
@@ -509,11 +516,11 @@ static void test_vector_insert_item_8_index_0(void **state)
  */
 static void test_vector_insert_item_7_index_2(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[7], 2), 0);
-    assert_int_equal((int) vector->count, 3);
+    assert_int_equal(vector->insert(vector, &values[7], 2), 0);
+    assert_int_equal((int) vector->size, 3);
     assert_int_equal((int) vector->capacity, VECTOR_INIT_CAPACITY);
     assert_vector(vector, 3, 8, 9, 7);
 
@@ -527,11 +534,11 @@ static void test_vector_insert_item_7_index_2(void **state)
  */
 static void test_vector_insert_item_6_index_1(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[6], 1), 0);
-    assert_int_equal((int) vector->count, 4);
+    assert_int_equal(vector->insert(vector, &values[6], 1), 0);
+    assert_int_equal((int) vector->size, 4);
     assert_int_equal((int) vector->capacity, VECTOR_INIT_CAPACITY);
     assert_vector(vector, 4, 8, 6, 9, 7);
 
@@ -545,11 +552,11 @@ static void test_vector_insert_item_6_index_1(void **state)
 */
 static void test_vector_insert_item_0_index_4(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[0], 4), 0);
-    assert_int_equal((int) vector->count, 5);
+    assert_int_equal(vector->insert(vector, &values[0], 4), 0);
+    assert_int_equal((int) vector->size, 5);
     assert_int_equal((int) vector->capacity, 2*VECTOR_INIT_CAPACITY);
     assert_vector(vector, 5, 8, 6, 9, 7, 0);
 
@@ -563,11 +570,11 @@ static void test_vector_insert_item_0_index_4(void **state)
 */
 static void test_vector_insert_item_3_index_3(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[3], 3), 0);
-    assert_int_equal((int) vector->count, 6);
+    assert_int_equal(vector->insert(vector, &values[3], 3), 0);
+    assert_int_equal((int) vector->size, 6);
     assert_int_equal((int) vector->capacity, 2*VECTOR_INIT_CAPACITY);
     assert_vector(vector, 6, 8, 6, 9, 3, 7, 0);
 
@@ -581,11 +588,11 @@ static void test_vector_insert_item_3_index_3(void **state)
 */
 static void test_vector_insert_item_1_index_1(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[1], 1), 0);
-    assert_int_equal((int) vector->count, 7);
+    assert_int_equal(vector->insert(vector, &values[1], 1), 0);
+    assert_int_equal((int) vector->size, 7);
     assert_int_equal((int) vector->capacity, 2*VECTOR_INIT_CAPACITY);
     assert_vector(vector, 7, 8, 1, 6, 9, 3, 7, 0);
 
@@ -599,11 +606,11 @@ static void test_vector_insert_item_1_index_1(void **state)
 */
 static void test_vector_insert_item_5_index_6(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[5], 6), 0);
-    assert_int_equal((int) vector->count, 8);
+    assert_int_equal(vector->insert(vector, &values[5], 6), 0);
+    assert_int_equal((int) vector->size, 8);
     assert_int_equal((int) vector->capacity, 2*VECTOR_INIT_CAPACITY);
     assert_vector(vector, 8, 8, 1, 6, 9, 3, 7, 5, 0);
 
@@ -617,11 +624,11 @@ static void test_vector_insert_item_5_index_6(void **state)
 */
 static void test_vector_insert_item_2_index_8(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[2], 8), 0);
-    assert_int_equal((int) vector->count, 9);
+    assert_int_equal(vector->insert(vector, &values[2], 8), 0);
+    assert_int_equal((int) vector->size, 9);
     assert_int_equal((int) vector->capacity, 4*VECTOR_INIT_CAPACITY);
     assert_vector(vector, 9, 8, 1, 6, 9, 3, 7, 5, 0, 2);
 
@@ -632,10 +639,10 @@ static void test_vector_insert_item_2_index_8(void **state)
 static int setup_vector_delete(void **state)
 {
     setup_vector_ins_count_8(state);
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_insert(vector, &values[2], 8), 0);
+    assert_int_equal(vector->insert(vector, &values[2], 8), 0);
     *state = vector;
 
     return 0;
@@ -644,51 +651,69 @@ static int setup_vector_delete(void **state)
 // Ensures that deletion from a Vector with 9 items works as expected. 
 static void test_vector_delete(void **state)
 {
-    Vector *vector = (Vector *) *state;
+    Vector* vector = (Vector*) *state;
     assert_non_null(vector);
 
-    assert_int_equal(vector_delete(vector, 8), 0);
-    assert_int_equal((int) vector->count, 8);
+    int* item = vector->remove(vector, 8);
+    assert_non_null(item);
+    assert_int_equal(*item, 2);
+    assert_int_equal((int) vector->size, 8);
     assert_int_equal((int) vector->capacity, 16);
     assert_vector(vector, 8, 8, 1, 6, 9, 3, 7, 5, 0);
 
-    assert_int_equal(vector_delete(vector, 6), 0);
-    assert_int_equal((int) vector->count, 7);
+    item = vector->remove(vector, 6);
+    assert_non_null(item);
+    assert_int_equal(*item, 5);
+    assert_int_equal((int) vector->size, 7);
     assert_int_equal((int) vector->capacity, 16);
     assert_vector(vector, 7, 8, 1, 6, 9, 3, 7, 0);
 
-    assert_int_equal(vector_delete(vector, 1), 0);
-    assert_int_equal((int) vector->count, 6);
+    item = vector->remove(vector, 1);
+    assert_non_null(item);
+    assert_int_equal(*item, 1);
+    assert_int_equal((int) vector->size, 6);
     assert_int_equal((int) vector->capacity, 16);
     assert_vector(vector, 6, 8, 6, 9, 3, 7, 0);
 
-    assert_int_equal(vector_delete(vector, 3), 0);
-    assert_int_equal((int) vector->count, 5);
+    item = vector->remove(vector, 3);
+    assert_non_null(item);
+    assert_int_equal(*item, 3);
+    assert_int_equal((int) vector->size, 5);
     assert_int_equal((int) vector->capacity, 16);
     assert_vector(vector, 5, 8, 6, 9, 7, 0);
 
-    assert_int_equal(vector_delete(vector, 4), 0);
-    assert_int_equal((int) vector->count, 4);
+    item = vector->remove(vector, 4);
+    assert_non_null(item);
+    assert_int_equal(*item, 0);
+    assert_int_equal((int) vector->size, 4);
     assert_int_equal((int) vector->capacity, 8);
     assert_vector(vector, 4, 8, 6, 9, 7);
 
-    assert_int_equal(vector_delete(vector, 1), 0);
-    assert_int_equal((int) vector->count, 3);
+    item = vector->remove(vector, 1);
+    assert_non_null(item);
+    assert_int_equal(*item, 6);
+    assert_int_equal((int) vector->size, 3);
     assert_int_equal((int) vector->capacity, 8);
     assert_vector(vector, 3, 8, 9, 7);
 
-    assert_int_equal(vector_delete(vector, 2), 0);
-    assert_int_equal((int) vector->count, 2);
+    item = vector->remove(vector, 2);
+    assert_non_null(item);
+    assert_int_equal(*item, 7);
+    assert_int_equal((int) vector->size, 2);
     assert_int_equal((int) vector->capacity, 4);
     assert_vector(vector, 2, 8, 9);
 
-    assert_int_equal(vector_delete(vector, 0), 0);
-    assert_int_equal((int) vector->count, 1);
+    item = vector->remove(vector, 0);
+    assert_non_null(item);
+    assert_int_equal(*item, 8);
+    assert_int_equal((int) vector->size, 1);
     assert_int_equal((int) vector->capacity, 4);
     assert_vector(vector, 1, 9);
 
-    assert_int_equal(vector_delete(vector, 0), 0);
-    assert_int_equal((int) vector->count, 0);
+    item = vector->remove(vector, 0);
+    assert_non_null(item);
+    assert_int_equal(*item, 9);
+    assert_int_equal((int) vector->size, 0);
     assert_int_equal((int) vector->capacity, 4);
 
     *state = vector;
