@@ -5,12 +5,12 @@ This is a generic queue implementation. A queue is a FIFO (first in, first out) 
 ## API
 The `Queue` API is detailed below.
 
-Fields:
+**Fields:**
   * [`Node*`](https://github.com/alexandra-zaharia/libgcds/blob/master/include/node.h) `first` -- the least recently added node
   * [`Node*`](https://github.com/alexandra-zaharia/libgcds/blob/master/include/node.h) `last` -- the most recently added node
   * `unsigned int size` -- number of items in the queue
   
-Methods (assume `queue` is a `Queue*`):
+**Methods** (assume `queue` is a `Queue*`)**:**
   * `Queue* queue_create()` -- Creates a new `Queue` and returns a pointer to it, or `NULL` in case of failure.
   * `queue->free(Queue* queue)` -- Frees the given `queue`.
   * `queue->is_empty(Queue* queue)` -- Returns `true` if the `queue` is empty, `false` otherwise.
@@ -18,5 +18,5 @@ Methods (assume `queue` is a `Queue*`):
   * `queue->dequeue(Queue* queue)` -- Removes and returns the least recently added item of the `queue`. Returns `NULL` if the queue is null or empty.
 
 For more details:
-  * [Header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/Queue/queue.h)
-  * [Implementation](https://github.com/alexandra-zaharia/libgcds/blob/master/src/Queue/queue.c)
+  * [Queue header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/Queue/queue.h)
+  * [Queue implementation](https://github.com/alexandra-zaharia/libgcds/blob/master/src/Queue/queue.c)

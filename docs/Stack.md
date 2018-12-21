@@ -6,11 +6,11 @@ This is a generic stack implementation. A stack is a LIFO (last in, first out) d
 
 The `Stack` API is detailed below.
 
-Fields:
+**Fields:**
   * [`Item*`](https://github.com/alexandra-zaharia/libgcds/blob/master/include/node.h) `top` -- the first (top) item in the stack
   * `unsigned int size` -- number of items in the stack
   
-Methods (assume `stack` is a `Stack*`):
+**Methods** (assume `stack` is a `Stack*`)**:**
   * `Stack* stack_create()` -- Creates a new `Stack` and returns a pointer to it, or `NULL` in case of failure.
   * `stack->free(Stack* stack)` -- Frees the given `stack`.
   * `stack->is_empty(Stack* stack)` -- Returns `true` if the `stack` is empty, `false` otherwise.
@@ -18,5 +18,5 @@ Methods (assume `stack` is a `Stack*`):
   * `stack->pop(Stack* stack)` -- Removes and returns the item on top of the `stack`. Returns `NULL` if the stack is null or empty.
 
 For more details:
-  * [Header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/Stack/stack.h)
-  * [Implementation](https://github.com/alexandra-zaharia/libgcds/blob/master/src/Stack/stack.c)
+  * [Stack header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/Stack/stack.h)
+  * [Stack implementation](https://github.com/alexandra-zaharia/libgcds/blob/master/src/Stack/stack.c)
