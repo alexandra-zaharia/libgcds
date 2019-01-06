@@ -16,4 +16,4 @@ The `makefile` will build the tests using the static library in [../build/lib](h
 
 ## -Wconversion warnings
 
-There are some `-Wsign-conversion` warnings when compiling the tests. This is due to the fact that the number of items in a data structure is stored as an `unsigned int`. When the user attempts to insert or remove an item at an invalid (negative) index, this generates a compiler warning. The data structures themselves handle such situations gracefully: the index (which should be an unsigned integer) is first converted to an integer and checked whether this integer it is negative, in which case the returns an failure code. 
+There are some `-Wsign-conversion` warnings when compiling the tests. This is due to the fact that the number of items in a data structure is stored as an `unsigned int`. When the user attempts to insert or remove an item at an invalid (negative) index, this generates a compiler warning. The data structures themselves handle such situations gracefully: the index (which should be an unsigned integer) is first converted to an integer and it is checked whether this integer is negative, in which case a failure code is returned. 
