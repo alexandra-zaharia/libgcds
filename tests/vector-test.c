@@ -719,6 +719,24 @@ static void test_vector_delete(void **state)
     *state = vector;
 }
 
+// Ensures that the 'contains' operation works as expected.
+static void test_vector_contains(void **state)
+{
+    Vector* vector = (Vector*) *state;
+    assert_non_null(vector);
+
+    assert_false(vector->contains(NULL, &values[3]));
+    for (int i = 0; i < 10; i++) {
+        vector->add(vector, &values[i]);
+        assert_true(vector->contains(vector, &values[i]));
+    }
+    int value = 10;
+    int* pvalue = &value;
+    assert_false(vector->contains(vector, pvalue));
+
+    *state = vector;
+}
+
 int run_tests_capacity()
 {
     const struct CMUnitTest tests[] = {
@@ -817,6 +835,18 @@ int run_tests_deletion()
     return cmocka_run_group_tests(tests, setup_values, teardown_values);
 }
 
+int run_tests_contains()
+{
+    const struct CMUnitTest tests[] = {
+            cmocka_unit_test_setup_teardown(
+                    test_vector_contains,
+                    setup_vector,
+                    teardown_vector)
+    };
+
+    return cmocka_run_group_tests(tests, setup_values, teardown_values);
+}
+
 int main()
 {
     int r_cap = run_tests_capacity();
@@ -824,6 +854,7 @@ int main()
     int r_ins = run_tests_insertion();
     int r_del = run_tests_deletion();
     int r_seq = run_tests_sequence();
+    int r_has = run_tests_contains();
 
-    return r_cap && r_add && r_ins && r_del && r_seq;
+    return r_cap && r_add && r_ins && r_del && r_seq && r_has;
 }

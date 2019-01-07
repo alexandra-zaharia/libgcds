@@ -86,6 +86,16 @@ void* vector_remove(Vector* vector, unsigned int index)
     return data;
 }
 
+// Determines whether the vector contains a given item.
+bool vector_contains(Vector* vector, void* item)
+{
+    if (!vector) return false;
+    for (unsigned int i = 0; i < vector->size; i++)
+        if (vector->data[i] == item)
+            return true;
+    return false;
+}
+
 // Creates and returns a pointer to Vector, or NULL in case of failure.
 Vector* vector_create()
 {
@@ -106,6 +116,8 @@ Vector* vector_create()
     vector->add = vector_add;
     vector->insert = vector_insert;
     vector->remove = vector_remove;
+
+    vector->contains = vector_contains;
 
     return vector;
 }
