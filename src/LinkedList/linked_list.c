@@ -11,9 +11,9 @@ void linked_list_free(LinkedList* list)
     if (!list) return;
 
     if (list->head) {
-        DNode *node = list->head;
+        DNode* node = list->head;
         while (node) {
-            DNode *tmp = node;
+            DNode* tmp = node;
             node = node->next;
             free(tmp);
         }
