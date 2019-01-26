@@ -24,7 +24,7 @@ static int setup_linked_list(void** state)
 }
 
 // Fixture setup: creates a LinkedList and inserts some values in it, at the start of the list.
-static int setup_linked_list_insert_start(void **state)
+static int setup_linked_list_insert_start(void** state)
 {
     LinkedList* list = linked_list_create();
     assert_non_null(list);
@@ -35,7 +35,7 @@ static int setup_linked_list_insert_start(void **state)
 }
 
 // Fixture setup: creates a LinkedList and inserts some values in it, at the end of the list.
-static int setup_linked_list_insert_end(void **state)
+static int setup_linked_list_insert_end(void** state)
 {
     LinkedList* list = linked_list_create();
     assert_non_null(list);
@@ -49,7 +49,7 @@ static int setup_linked_list_insert_end(void **state)
  * Fixture setup: creates a LinkedList and inserts some values in it, at specific indexes of the
  * list.
  */
-static int setup_linked_list_insert_at(void **state)
+static int setup_linked_list_insert_at(void** state)
 {
     LinkedList* list = linked_list_create();
     assert_non_null(list);
