@@ -5,6 +5,7 @@
 ## Data structures 
 
 For the moment, `libgcds` features the following data structures:
+  * [`CircularLinkedList`](https://github.com/alexandra-zaharia/libgcds/blob/master/docs/CircularLinkedList.md) -- A circular doubly linked list implementation accepting insertion and removal operations at the beginning, at the end, or at a specified index in the circular linked list.
   * [`LinkedList`](https://github.com/alexandra-zaharia/libgcds/blob/master/docs/LinkedList.md) -- A doubly linked list implementation accepting insertion and removal operations at the beginning, at the end, or at a specified index in the linked list.
   * [`Queue`](https://github.com/alexandra-zaharia/libgcds/blob/master/docs/Queue.md) -- A queue implementation accepting `enqueue` and `dequeue` operations.
   * [`Stack`](https://github.com/alexandra-zaharia/libgcds/blob/master/docs/Stack.md) -- A stack implementation accepting `push` and `pop` operations.
