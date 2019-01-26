@@ -70,7 +70,7 @@ int linked_list_insert_end(LinkedList* list, void* data)
     return 0;
 }
 
-// Returns the Node* at the designated index in the linked list, or NULL in case of failure.
+// Returns the DNode* at the designated index in the linked list, or NULL in case of failure.
 static DNode* _find_node_at_index(LinkedList* list, unsigned int index)
 {
     if (!list || (int) index < 0 || index >= list->size) return NULL;
