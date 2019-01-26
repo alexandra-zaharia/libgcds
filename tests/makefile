@@ -10,7 +10,10 @@ LIB=-L ../build/lib
 # Tell the linker to link with libgcds and libcmocka
 LDFLAGS=-lgcds -lcmocka
 
-all: linked_list-test queue-test stack-test vector-test
+all: circular_linked_list-test linked_list-test queue-test stack-test vector-test
+
+circular_linked_list-test: circular_linked_list-test.c
+	$(CC) $< $(CFLAGS) $(INC) $(LIB) $(LDFLAGS) -o $@
 
 linked_list-test: linked_list-test.c
 	$(CC) $< $(CFLAGS) $(INC) $(LIB) $(LDFLAGS) -o $@
@@ -28,6 +31,7 @@ clean:
 	rm linked_list-test queue-test stack-test vector-test
 
 run:
+	./circular_linked_list-test
 	./linked_list-test
 	./queue-test
 	./stack-test
