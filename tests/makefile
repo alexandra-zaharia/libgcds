@@ -28,7 +28,7 @@ vector-test: vector-test.c
 	$(CC) $< $(CFLAGS) $(INC) $(LIB) $(LDFLAGS) -o $@
 
 clean:
-	rm linked_list-test queue-test stack-test vector-test
+	rm circular_linked_list-test linked_list-test queue-test stack-test vector-test
 
 run:
 	./circular_linked_list-test
