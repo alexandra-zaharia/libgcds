@@ -23,6 +23,7 @@ The **TL;DR** API for a hypothetical `DataStructure` containing elements of type
 DataStructure* ds = data_structure_create();        // NULL if error
 int status = ds->some_add_operation(ds, item);      // 0 for success
 Item* item = (Item*) ds->some_remove_operation(ds); // NULL if error
+assert (!ds->contains(ds, item);                    // item already removed
 ds->free(ds);
 ``` 
 
