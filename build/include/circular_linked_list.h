@@ -25,6 +25,8 @@ struct CircularLinkedList {
     void* (*remove_start)(CircularLinkedList*);        // removes and returns item at front of list
     void* (*remove_end)(CircularLinkedList*);          // removes and returns item at end of list
     void* (*remove_at)(CircularLinkedList*, int);      // removes and returns item at position
+
+    bool (*contains)(CircularLinkedList*, void*);      // does the list contain a given item?
 };
 
 CircularLinkedList* circular_linked_list_create();

@@ -21,6 +21,7 @@ The `CircularLinkedList` API is detailed below.
   * `list->remove_start(CircularLinkedList* list)` -- Removes and returns the item at the beginning of the circular linked `list` as a `void*`. Returns `NULL` if the list is null or empty.
   * `list->remove_end(CircularLinkedList* list)` -- Removes and returns the item at the end of the circular linked `list` as a `void*`. Returns `NULL` if the list is null or empty.
   * `list->remove_at(CircularLinkedList* list, unsigned int index)` -- Removes and returns the item at the specified `index` of the circular linked `list` as a `void*`. Returns `NULL` if the list is null or empty, or if there is no item at the specified position.
+  * `list->contains(CircularLinkedList* list, void* item)` -- Returns `true` if the circular linked list contains the item, and `false` otherwise.
 
 For more details:
   * [Circular linked list header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/CircularLinkedList/circular_linked_list.h)

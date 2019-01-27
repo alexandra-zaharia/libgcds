@@ -205,6 +205,23 @@ void* circular_linked_list_remove_at(CircularLinkedList* list, int index)
     return data;
 }
 
+// Determines whether the circular linked list contains a given item.
+bool circular_linked_list_contains(CircularLinkedList* list, void* item)
+{
+    if (!list || !list->head) return false;
+
+    DNode* node = list->head;
+    while (node && node->next != list->head) {
+        if (node->data == item)
+            return true;
+        node = node->next;
+    }
+
+    if (node) return node->data == item;
+
+    return false;
+}
+
 // Creates and returns a CircularLinkedList*, or NULL in case of failure.
 CircularLinkedList* circular_linked_list_create()
 {
@@ -225,6 +242,8 @@ CircularLinkedList* circular_linked_list_create()
     list->remove_start = circular_linked_list_remove_start;
     list->remove_end = circular_linked_list_remove_end;
     list->remove_at = circular_linked_list_remove_at;
+
+    list->contains = circular_linked_list_contains;
 
     return list;
 }

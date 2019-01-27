@@ -238,6 +238,22 @@ static void test_circular_linked_list_delete_at(void** state)
     *state = list;
 }
 
+// Ensures that the 'contains' operation works as expected.
+static void test_circular_linked_list_contains(void** state)
+{
+    CircularLinkedList* list = (CircularLinkedList*) *state;
+    assert_non_null(list);
+
+    assert_false(list->contains(NULL, &values[3]));
+    for (int i = 0; i < 10; i++)
+        assert_true(list->contains(list, &values[i]));
+    int value = 10;
+    int* pvalue = &value;
+    assert_false(list->contains(list, pvalue));
+
+    *state = list;
+}
+
 // Main ------------------------------------------------------------------------
 
 int main()
@@ -306,6 +322,13 @@ int main()
 
     };
 
+    const struct CMUnitTest tests_contains[] = {
+            cmocka_unit_test_setup_teardown(
+                    test_circular_linked_list_contains,
+                    setup_circular_linked_list_insert_start,
+                    teardown_circular_linked_list)
+    };
+
     int status_creation = cmocka_run_group_tests(
             tests_creation, setup_circular_linked_list, teardown_circular_linked_list);
     int status_deallocation1 = cmocka_run_group_tests(
@@ -314,7 +337,8 @@ int main()
             tests_deallocation, setup_circular_linked_list_two_elements, NULL);
     int status_insertion = cmocka_run_group_tests(tests_insertion, NULL, NULL);
     int status_deletion = cmocka_run_group_tests(tests_deletion, NULL, NULL);
+    int status_contains = cmocka_run_group_tests(tests_contains, NULL, NULL);
 
     return status_creation && status_deallocation1 && status_deallocation2
-           && status_insertion && status_deletion;
+           && status_insertion && status_deletion && status_contains;
 }
