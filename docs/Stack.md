@@ -16,6 +16,8 @@ The `Stack` API is detailed below.
   * `stack->is_empty(Stack* stack)` -- Returns `true` if the `stack` is empty, `false` otherwise.
   * `stack->push(Stack* stack, void* data)` -- Adds the `data` on top of the `stack`. Returns 0 on success and -1 on failure.
   * `stack->pop(Stack* stack)` -- Removes and returns the item on top of the `stack`. Returns `NULL` if the stack is null or empty.
+  * `stack->contains(Stack* stack, void* item)` -- Returns `true` if the stack contains the item, and `false` otherwise.
+
 
 For more details:
   * [Stack header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/Stack/stack.h)

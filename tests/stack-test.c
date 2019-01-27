@@ -87,6 +87,24 @@ static void test_stack_pop(void **state)
     *state = stack;
 }
 
+// Ensures that the 'contains' operation works as expected
+static void test_stack_contains(void** state)
+{
+    Stack* stack = (Stack*) *state;
+
+    for (int i = 0; i < 10; i++) {
+        assert_int_equal(stack->push(stack, &values[i]), 0);
+        assert_true(stack->contains(stack, &values[i]));
+    }
+
+    int value = 10;
+    int* pvalue = &value;
+    assert_false(stack->contains(stack, pvalue));
+
+    *state = stack;
+}
+
+
 // Main ------------------------------------------------------------------------
 
 int main()
@@ -95,7 +113,8 @@ int main()
             cmocka_unit_test(test_stack_create),
             cmocka_unit_test(test_stack_is_empty),
             cmocka_unit_test(test_stack_push),
-            cmocka_unit_test(test_stack_pop)
+            cmocka_unit_test(test_stack_pop),
+            cmocka_unit_test(test_stack_contains)
     };
 
     return cmocka_run_group_tests(tests, setup_stack, teardown_stack);

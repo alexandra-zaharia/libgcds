@@ -61,6 +61,21 @@ void* stack_pop(Stack* stack)
     return data;
 }
 
+// Determines whether the stack contains a given item.
+bool stack_contains(Stack* stack, void* item)
+{
+    if (!stack || !stack->top) return false;
+
+    Item* node = stack->top;
+    while (node) {
+        if (node->data == item)
+            return true;
+        node = node->next;
+    }
+
+    return false;
+}
+
 // Creates and returns a Stack*, or NULL in case of failure.
 Stack* stack_create()
 {
@@ -74,6 +89,8 @@ Stack* stack_create()
     stack->is_empty = stack_is_empty;
     stack->push = stack_push;
     stack->pop = stack_pop;
+
+    stack->contains = stack_contains;
 
     return stack;
 }

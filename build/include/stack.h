@@ -11,14 +11,16 @@
 typedef struct Stack Stack;
 
 struct Stack {
-    Item* top;                  // first item in the stack
-    unsigned int size;          // number of items in the stack
+    Item* top;                       // first item in the stack
+    unsigned int size;               // number of items in the stack
 
-    void (*free)(Stack*);       // frees the stack
-    bool (*is_empty)(Stack*);   // is the stack empty?
+    void (*free)(Stack*);            // frees the stack
+    bool (*is_empty)(Stack*);        // is the stack empty?
 
-    int (*push)(Stack*, void*); // adds an item on top of the stack
-    void* (*pop)(Stack*);       // removes and returns item at top of stack
+    int (*push)(Stack*, void*);      // adds an item on top of the stack
+    void* (*pop)(Stack*);            // removes and returns item at top of stack
+
+    bool (*contains)(Stack*, void*); // does the stack contain a given item?
 };
 
 Stack* stack_create();
