@@ -68,6 +68,21 @@ void* queue_dequeue(Queue* queue)
     return data;
 }
 
+// Determines whether the queue contains a given item.
+bool queue_contains(Queue* queue, void* item)
+{
+    if (!queue || !queue->first) return false;
+
+    Node* node = queue->first;
+    while (node) {
+        if (node->data == item)
+            return true;
+        node = node->next;
+    }
+
+    return false;
+}
+
 // Creates and returns a Queue*, or NULL in case of failure.
 Queue* queue_create()
 {
@@ -83,6 +98,8 @@ Queue* queue_create()
 
     queue->enqueue = queue_enqueue;
     queue->dequeue = queue_dequeue;
+
+    queue->contains = queue_contains;
 
     return queue;
 }

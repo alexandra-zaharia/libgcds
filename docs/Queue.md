@@ -16,6 +16,8 @@ The `Queue` API is detailed below.
   * `queue->is_empty(Queue* queue)` -- Returns `true` if the `queue` is empty, `false` otherwise.
   * `queue->enqueue(Queue* queue, void* data)` -- Adds the `data` to the `queue`. Returns 0 on success and -1 on failure.
   * `queue->dequeue(Queue* queue)` -- Removes and returns the least recently added item of the `queue`. Returns `NULL` if the queue is null or empty.
+  * `queue->contains(Queue* queue, void* item)` -- Returns `true` if the queue contains the item, and `false` otherwise.
+
 
 For more details:
   * [Queue header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/Queue/queue.h)

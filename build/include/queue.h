@@ -20,6 +20,8 @@ struct Queue {
 
     int (*enqueue)(Queue*, void* data); // adds an item to the queue
     void* (*dequeue)(Queue*);           // removes an item from the queue
+
+    bool (*contains)(Queue*, void*);    // does the queue contain a given item?
 };
 
 Queue* queue_create();

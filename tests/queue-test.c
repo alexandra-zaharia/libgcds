@@ -13,7 +13,7 @@
 // Fixtures --------------------------------------------------------------------
 
 /* Fixture setup: creates a Queue. */
-static int setup_queue(void **state)
+static int setup_queue(void** state)
 {
     Queue* queue = queue_create();
     assert_non_null(queue);
@@ -22,7 +22,7 @@ static int setup_queue(void **state)
 }
 
 /* Fixture teardown: frees a Queue. */
-static int teardown_queue(void **state)
+static int teardown_queue(void** state)
 {
     Queue* queue = (Queue*) *state;
     queue->free(queue);
@@ -34,7 +34,7 @@ int values[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 // Tests -----------------------------------------------------------------------
 
 // Tests queue creation
-static void test_queue_create(void **state)
+static void test_queue_create(void** state)
 {
     Queue* queue = (Queue*) *state;
     assert_non_null(queue);
@@ -50,7 +50,7 @@ static void test_queue_is_empty(void **state)
 }
 
 // Tests insertion in the queue
-static void test_queue_enqueue(void **state)
+static void test_queue_enqueue(void** state)
 {
     Queue* queue = (Queue*) *state;
 
@@ -68,7 +68,7 @@ static void test_queue_enqueue(void **state)
 }
 
 // Tests removal from the queue
-static void test_queue_dequeue(void **state)
+static void test_queue_dequeue(void** state)
 {
     Queue* queue = (Queue*) *state;
 
@@ -87,6 +87,23 @@ static void test_queue_dequeue(void **state)
     *state = queue;
 }
 
+// Ensures that the 'contains' operation works as expected
+static void test_queue_contains(void** state)
+{
+    Queue* queue = (Queue*) *state;
+
+    for (int i = 0; i < 10; i++) {
+        assert_int_equal(queue->enqueue(queue, &values[i]), 0);
+        assert_true(queue->contains(queue, &values[i]));
+    }
+
+    int value = 10;
+    int* pvalue = &value;
+    assert_false(queue->contains(queue, pvalue));
+
+    *state = queue;
+}
+
 // Main ------------------------------------------------------------------------
 
 int main()
@@ -95,7 +112,8 @@ int main()
             cmocka_unit_test(test_queue_create),
             cmocka_unit_test(test_queue_is_empty),
             cmocka_unit_test(test_queue_enqueue),
-            cmocka_unit_test(test_queue_dequeue)
+            cmocka_unit_test(test_queue_dequeue),
+            cmocka_unit_test(test_queue_contains)
     };
 
     return cmocka_run_group_tests(tests, setup_queue, teardown_queue);
