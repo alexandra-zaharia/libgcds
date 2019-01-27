@@ -17,10 +17,10 @@ The `LinkedList` API is detailed below.
   * `list->is_empty(LinkedList* list)` -- Returns `true` if the linked `list` is empty, `false` otherwise.
   * `list->insert_start(LinkedList* list, void* data)` -- Adds the designated `data` at the beginning of the linked `list`. Returns 0 on success and -1 on failure.
   * `list->insert_end(LinkedList* list, void* data)` -- Adds the designated `data` at the end of the linked `list`. Returns 0 on success and -1 on failure.
-  * `list->insert_at(LinkedList* list, void* data, unsigned int index)` -- Adds the designated `data` at the specified `index` of the linked `list`. Returns 0 on success and -1 on failure.
+  * `list->insert_at(LinkedList* list, void* data, int index)` -- Adds the designated `data` at the specified `index` of the linked `list`. Returns 0 on success and -1 on failure.
   * `list->remove_start(LinkedList* list)` -- Removes and returns the item at the beginning of the linked `list` as a `void*`. Returns `NULL` if the list is null or empty.
   * `list->remove_end(LinkedList* list)` -- Removes and returns the item at the end of the linked `list` as a `void*`. Returns `NULL` if the list is null or empty.
-  * `list->remove_at(LinkedList* list, unsigned int index)` -- Removes and returns the item at the specified `index` of the linked `list` as a `void*`. Returns `NULL` if the list is null or empty, or if there is no item at the specified position.
+  * `list->remove_at(LinkedList* list, int index)` -- Removes and returns the item at the specified `index` of the linked `list` as a `void*`. Returns `NULL` if the list is null or empty, or if there is no item at the specified position.
 
 For more details:
   * [Linked list header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/LinkedList/linked_list.h)

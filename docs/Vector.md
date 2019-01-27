@@ -15,8 +15,8 @@ The `Vector` API is detailed below.
   * `Vector* vector_create()` -- Creates a new `vector` and returns a pointer to it, or `NULL` in case of failure.
   * `vector->free(Vector* vector)` -- Frees the given `vector`.
   * `vector->add(Vector* vector, void* item)` -- Adds the `item` at the end of the `vector`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
-  * `vector->insert(Vector* vector, void* item, unsigned int index)` -- Inserts the `item` to the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
-  * `vector->remove(Vector* vector, unsigned int index)` -- Deletes an item in the `vector` at the specified `index`, resizing the underlying array if necessary. Returns the item that was removed as a `void*`, or `NULL` in case of failure.
+  * `vector->insert(Vector* vector, void* item, int index)` -- Inserts the `item` to the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
+  * `vector->remove(Vector* vector, int index)` -- Deletes an item in the `vector` at the specified `index`, resizing the underlying array if necessary. Returns the item that was removed as a `void*`, or `NULL` in case of failure.
   * `vector->contains(Vector* vector, void* item)` -- Returns `true` if the vector contains the specified item, and `false` otherwise.
 
 For more details:

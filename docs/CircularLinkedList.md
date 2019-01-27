@@ -17,10 +17,10 @@ The `CircularLinkedList` API is detailed below.
   * `list->is_empty(CircularLinkedList* list)` -- Returns `true` if the circular linked `list` is empty, `false` otherwise.
   * `list->insert_start(CircularLinkedList* list, void* data)` -- Adds the designated `data` at the beginning of the circular linked `list`. Returns 0 on success and -1 on failure.
   * `list->insert_end(CircularLinkedList* list, void* data)` -- Adds the designated `data` at the end of the circular linked `list`. Returns 0 on success and -1 on failure.
-  * `list->insert_at(CircularLinkedList* list, void* data, unsigned int index)` -- Adds the designated `data` at the specified `index` of the circular linked `list`. Returns 0 on success and -1 on failure.
+  * `list->insert_at(CircularLinkedList* list, void* data, int index)` -- Adds the designated `data` at the specified `index` of the circular linked `list`. Returns 0 on success and -1 on failure.
   * `list->remove_start(CircularLinkedList* list)` -- Removes and returns the item at the beginning of the circular linked `list` as a `void*`. Returns `NULL` if the list is null or empty.
   * `list->remove_end(CircularLinkedList* list)` -- Removes and returns the item at the end of the circular linked `list` as a `void*`. Returns `NULL` if the list is null or empty.
-  * `list->remove_at(CircularLinkedList* list, unsigned int index)` -- Removes and returns the item at the specified `index` of the circular linked `list` as a `void*`. Returns `NULL` if the list is null or empty, or if there is no item at the specified position.
+  * `list->remove_at(CircularLinkedList* list, int index)` -- Removes and returns the item at the specified `index` of the circular linked `list` as a `void*`. Returns `NULL` if the list is null or empty, or if there is no item at the specified position.
   * `list->contains(CircularLinkedList* list, void* item)` -- Returns `true` if the circular linked list contains the item, and `false` otherwise.
 
 For more details:
