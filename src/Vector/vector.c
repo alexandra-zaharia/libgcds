@@ -42,12 +42,13 @@ int vector_add(Vector* vector, void* item)
 }
 
 // Inserts an item at a specified index in the vector. Returns 0 for success and -1 for failure.
-int vector_insert(Vector* vector, void* item, unsigned int index)
+int vector_insert(Vector* vector, void* item, int index)
 {
     if (!vector || !vector->data) return -1;
-    if ((int) index < 0 || index > vector->size) return -1;
+    unsigned int u_index = (unsigned int) index;
+    if (index < 0 || u_index > vector->size) return -1;
 
-    if (index == vector->size) {
+    if (u_index == vector->size) {
         if (vector_add(vector, item) == -1) return -1;
     } else {
         if (vector->size == vector->capacity) {
@@ -55,10 +56,10 @@ int vector_insert(Vector* vector, void* item, unsigned int index)
                 return -1;
         }
 
-        for (size_t i = vector->size; i > index; i--)
+        for (size_t i = vector->size; i > u_index; i--)
             vector->data[i] = vector->data[i-1];
 
-        vector->data[index] = item;
+        vector->data[u_index] = item;
         ++vector->size;
     }
 
@@ -66,16 +67,17 @@ int vector_insert(Vector* vector, void* item, unsigned int index)
 }
 
 // Removes and returns the item at the specified index in the vector, or NULL in case of failure.
-void* vector_remove(Vector* vector, unsigned int index)
+void* vector_remove(Vector* vector, int index)
 {
     if (!vector || !vector->data) return NULL;
-    if ((int) index < 0 || index >= vector->size) return NULL;
+    unsigned int u_index = (unsigned int) index;
+    if (index < 0 || u_index >= vector->size) return NULL;
 
     --vector->size;
 
-    void* data = vector->data[index];
+    void* data = vector->data[u_index];
 
-    for (size_t i = index; i < vector->size; i++)
+    for (size_t i = u_index; i < vector->size; i++)
         vector->data[i] = vector->data[i+1];
 
     if (vector->size == vector->capacity / 4 && vector->capacity > VECTOR_INIT_CAPACITY) {

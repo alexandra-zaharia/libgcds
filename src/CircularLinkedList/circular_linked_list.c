@@ -84,24 +84,25 @@ int circular_linked_list_insert_end(CircularLinkedList* list, void* data)
  * Returns the DNode* at the designated index in the circular linked list, or NULL in case of
  * failure.
  */
-static DNode* _find_node_at_index(CircularLinkedList* list, unsigned int index)
+static DNode* _find_node_at_index(CircularLinkedList* list, int index)
 {
-    if (!list || (int) index < 0 || index >= list->size) return NULL;
+    if (!list || index < 0 || (unsigned int) index >= list->size) return NULL;
 
     DNode* node;
     unsigned int current_index;
+    unsigned int u_index = (unsigned int) index;
 
-    if (index <= list->size / 2) {
+    if (u_index <= list->size / 2) {
         node = list->head;
         current_index = 0;
-        while (current_index < index) {
+        while (current_index < u_index) {
             node = node->next;
             ++current_index;
         }
     } else {
         node = list->tail;
         current_index = list->size - 1;
-        while (current_index > index) {
+        while (current_index > u_index) {
             node = node->prev;
             --current_index;
         }
@@ -114,11 +115,11 @@ static DNode* _find_node_at_index(CircularLinkedList* list, unsigned int index)
  * Inserts the item at a designated position 'index' of the circular linked list. Returns 0 for
  * success and -1 for failure.
  */
-int circular_linked_list_insert_at(CircularLinkedList* list, void* data, unsigned int index)
+int circular_linked_list_insert_at(CircularLinkedList* list, void* data, int index)
 {
-    if (!list || (int) index < 0 || index > list->size) return -1;
+    if (!list || index < 0 || (unsigned int) index > list->size) return -1;
     if (index == 0) return list->insert_start(list, data);
-    if (index == list->size) return list->insert_end(list, data);
+    if ((unsigned int) index == list->size) return list->insert_end(list, data);
 
     DNode* node = dnode_create(data);
     if (!node) return -1;
@@ -185,11 +186,11 @@ void* circular_linked_list_remove_end(CircularLinkedList* list)
  * Removes and returns the item at a designated position 'index' of the circular linked list, or
  * NULL in case of failure.
  */
-void* circular_linked_list_remove_at(CircularLinkedList* list, unsigned int index)
+void* circular_linked_list_remove_at(CircularLinkedList* list, int index)
 {
-    if (!list || (int) index < 0 || index >= list->size) return NULL;
+    if (!list || index < 0 || (unsigned int) index >= list->size) return NULL;
     if (index == 0) return list->remove_start(list);
-    if (index == list->size - 1) return list->remove_end(list);
+    if ((unsigned int) index == list->size - 1) return list->remove_end(list);
 
     DNode* node = _find_node_at_index(list, index);
     if (!node) return NULL;

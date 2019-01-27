@@ -20,11 +20,11 @@ struct CircularLinkedList {
 
     int (*insert_start)(CircularLinkedList*, void*); // adds an item at the front of the linked list
     int (*insert_end)(CircularLinkedList*, void*);   // adds an item at the end of the linked list
-    int (*insert_at)(CircularLinkedList*, void*, unsigned int); // adds an item at a given position
+    int (*insert_at)(CircularLinkedList*, void*, int); // adds an item at a given position
 
-    void* (*remove_start)(CircularLinkedList*);      // removes and returns item at front of list
-    void* (*remove_end)(CircularLinkedList*);        // removes and returns item at end of list
-    void* (*remove_at)(CircularLinkedList*, unsigned int); // removes and returns item at position
+    void* (*remove_start)(CircularLinkedList*);        // removes and returns item at front of list
+    void* (*remove_end)(CircularLinkedList*);          // removes and returns item at end of list
+    void* (*remove_at)(CircularLinkedList*, int);      // removes and returns item at position
 };
 
 CircularLinkedList* circular_linked_list_create();
