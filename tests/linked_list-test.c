@@ -208,6 +208,22 @@ static void test_linked_list_delete_at(void** state)
     *state = list;
 }
 
+// Ensures that the 'contains' operation works as expected.
+static void test_linked_list_contains(void** state)
+{
+    LinkedList* list = (LinkedList*) *state;
+    assert_non_null(list);
+
+    assert_false(list->contains(NULL, &values[3]));
+    for (int i = 0; i < 10; i++)
+        assert_true(list->contains(list, &values[i]));
+    int value = 10;
+    int* pvalue = &value;
+    assert_false(list->contains(list, pvalue));
+
+    *state = list;
+}
+
 // Main ------------------------------------------------------------------------
 
 int main()
@@ -266,10 +282,18 @@ int main()
 
     };
 
+    const struct CMUnitTest tests_contains[] = {
+            cmocka_unit_test_setup_teardown(
+                    test_linked_list_contains,
+                    setup_linked_list_insert_start,
+                    teardown_linked_list)
+    };
+
     int status_creation = cmocka_run_group_tests(
             tests_creation, setup_linked_list, teardown_linked_list);
     int status_insertion = cmocka_run_group_tests(tests_insertion, NULL, NULL);
     int status_deletion = cmocka_run_group_tests(tests_deletion, NULL, NULL);
+    int status_contains = cmocka_run_group_tests(tests_contains, NULL, NULL);
 
-    return status_creation && status_insertion && status_deletion;
+    return status_creation && status_insertion && status_deletion && status_contains;
 }

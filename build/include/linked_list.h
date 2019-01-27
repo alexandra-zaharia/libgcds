@@ -25,6 +25,8 @@ struct LinkedList {
     void* (*remove_start)(LinkedList*);        // removes and returns item at front of linked list
     void* (*remove_end)(LinkedList*);          // removes and returns item at end of linked list
     void* (*remove_at)(LinkedList*, int);      // removes and returns item at specified position
+
+    bool (*contains)(LinkedList*, void*);      // does the list contain a given item?
 };
 
 LinkedList* linked_list_create();

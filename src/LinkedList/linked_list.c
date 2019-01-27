@@ -186,6 +186,21 @@ void* linked_list_remove_at(LinkedList* list, int index)
     return data;
 }
 
+// Determines whether the linked list contains a given item.
+bool linked_list_contains(LinkedList* list, void* item)
+{
+    if (!list || !list->head) return false;
+
+    DNode* node = list->head;
+    while (node) {
+        if (node->data == item)
+            return true;
+        node = node->next;
+    }
+
+    return false;
+}
+
 // Creates and returns a LinkedList*, or NULL in case of failure.
 LinkedList* linked_list_create()
 {
@@ -206,6 +221,8 @@ LinkedList* linked_list_create()
     list->remove_start = linked_list_remove_start;
     list->remove_end = linked_list_remove_end;
     list->remove_at = linked_list_remove_at;
+
+    list->contains = linked_list_contains;
 
     return list;
 }
