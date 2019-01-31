@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(gcdslib)
+project(libgcds)
 
 set(CMAKE_C_STANDARD 11)
 set(GCC_COVERAGE_COMPILE_FLAGS "-g -Wall -Wextra -Wpedantic -Wconversion")
