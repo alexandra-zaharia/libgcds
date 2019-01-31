@@ -39,10 +39,9 @@ void print(CircularLinkedList* list)
 {
     if (!list || list->is_empty(list)) return;
     DNode* node = list->head;
-    while (node && node->next != list->head) {
+    do {
         printf("%d ", *((int*) node->data));
         node = node->next;
-    }
-    if (node) printf("%d ", *((int*) node->data));
+    } while (node && node != list->head);
     printf("\n");
 }

@@ -47,14 +47,10 @@ void list_point_print(CircularLinkedList* list)
 {
     if (!list || list->is_empty(list)) return;
     DNode* node = list->head;
-    while (node && node->next != list->head) {
+    do {
         Point* p = (Point*) node->data;
         printf("(%d, %d) ", p->x, p->y);
         node = node->next;
-    }
-    if (node) {
-        Point* p = (Point*) node->data;
-        printf("(%d, %d) ", p->x, p->y);
-    }
+    } while (node && node != list->head);
     printf("\n");
 }
