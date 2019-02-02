@@ -20,10 +20,11 @@ The API of each data structure is detailed in the [documentation](https://github
 The **TL;DR** API for a hypothetical `DataStructure` containing elements of type `Item*` is as follows:
 
 ```c
-DataStructure* ds = data_structure_create();        // NULL if error
-int status = ds->some_add_operation(ds, item);      // 0 for success
-Item* item = (Item*) ds->some_remove_operation(ds); // NULL if error
-assert (!ds->contains(ds, item);                    // item already removed
+DataStructure* ds = data_structure_create();   // NULL if error
+int status = ds->some_add_operation(ds, item); // 0 for success; refer to APIs for insertion methods
+int index = ds->index(ds, item);               // -1 if not found
+Item* item = (Item*) ds->remove_at(ds, index); // NULL if error; refer to APIs for other delete methods
+assert (!ds->contains(ds, item);               // item already removed
 ds->free(ds);
 ``` 
 
