@@ -224,7 +224,7 @@ static void test_linked_list_contains(void** state)
     *state = list;
 }
 
-// Texts whether the indexes of items in the linked list are correctly determined.
+// Tests whether the indexes of items in the linked list are correctly determined.
 static void test_linked_list_index(void** state)
 {
     LinkedList* list = (LinkedList*) *state;
