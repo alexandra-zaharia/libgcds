@@ -17,6 +17,7 @@ struct Vector {
     void* (*remove)(Vector*, int);      // removes an item at a specified position
 
     bool (*contains)(Vector*, void*);   // does the vector contain a given item?
+    int (*index)(Vector*, void*);       // returns the index of an item in the vector
 };
 
 extern const unsigned int VECTOR_INIT_CAPACITY;

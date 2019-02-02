@@ -18,6 +18,7 @@ The `Vector` API is detailed below.
   * `vector->insert(Vector* vector, void* item, int index)` -- Inserts the `item` to the `vector` at the specified `index`, resizing the underlying array if necessary. Returns 0 on success and -1 on failure.
   * `vector->remove(Vector* vector, int index)` -- Deletes an item in the `vector` at the specified `index`, resizing the underlying array if necessary. Returns the item that was removed as a `void*`, or `NULL` in case of failure.
   * `vector->contains(Vector* vector, void* item)` -- Returns `true` if the vector contains the specified item, and `false` otherwise.
+  * `vector->index(Vector* vector, void* item)` -- Returns the index of `item` in the `vector`, or -1 if the item is not found.
 
 For more details:
   * [Vector header file](https://github.com/alexandra-zaharia/libgcds/blob/master/include/Vector/vector.h)

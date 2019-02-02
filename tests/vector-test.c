@@ -737,6 +737,24 @@ static void test_vector_contains(void **state)
     *state = vector;
 }
 
+// Texts whether the indexes of items in the linked list are correctly determined.
+static void test_vector_index(void **state)
+{
+    Vector* vector = (Vector*) *state;
+    assert_non_null(vector);
+
+    assert_false(vector->contains(NULL, &values[3]));
+    for (int i = 0; i < 10; i++) {
+        vector->add(vector, &values[i]);
+        assert_int_equal(vector->index(vector, &values[i]), i);
+    }
+    int value = 10;
+    int* pvalue = &value;
+    assert_int_equal(vector->index(vector, pvalue), -1);
+
+    *state = vector;
+}
+
 int run_tests_capacity()
 {
     const struct CMUnitTest tests[] = {
@@ -840,6 +858,10 @@ int run_tests_contains()
     const struct CMUnitTest tests[] = {
             cmocka_unit_test_setup_teardown(
                     test_vector_contains,
+                    setup_vector,
+                    teardown_vector),
+            cmocka_unit_test_setup_teardown(
+                    test_vector_index,
                     setup_vector,
                     teardown_vector)
     };

@@ -98,6 +98,20 @@ bool vector_contains(Vector* vector, void* item)
     return false;
 }
 
+// Returns the index of the given item in the vector, or -1 if the item is not found.
+int vector_index(Vector* vector, void* item)
+{
+    if (!vector) return -1;
+
+    for (unsigned int i = 0; i < vector->size; i++) {
+        if (vector->data[i] == item)
+            return (int) i;
+    }
+
+    return -1;
+
+}
+
 // Creates and returns a pointer to Vector, or NULL in case of failure.
 Vector* vector_create()
 {
@@ -120,6 +134,7 @@ Vector* vector_create()
     vector->remove = vector_remove;
 
     vector->contains = vector_contains;
+    vector->index = vector_index;
 
     return vector;
 }
