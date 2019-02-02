@@ -224,6 +224,22 @@ static void test_linked_list_contains(void** state)
     *state = list;
 }
 
+// Texts whether the indexes of items in the linked list are correctly determined.
+static void test_linked_list_index(void** state)
+{
+    LinkedList* list = (LinkedList*) *state;
+    assert_non_null(list);
+
+    assert_false(list->contains(NULL, &values[3]));
+    for (int i = 0; i < 10; i++)
+        assert_int_equal(list->index(list, &values[i]), i);
+    int value = 10;
+    int* pvalue = &value;
+    assert_int_equal(list->index(list, pvalue), -1);
+
+    *state = list;
+}
+
 // Main ------------------------------------------------------------------------
 
 int main()
@@ -285,6 +301,10 @@ int main()
     const struct CMUnitTest tests_contains[] = {
             cmocka_unit_test_setup_teardown(
                     test_linked_list_contains,
+                    setup_linked_list_insert_start,
+                    teardown_linked_list),
+            cmocka_unit_test_setup_teardown(
+                    test_linked_list_index,
                     setup_linked_list_insert_start,
                     teardown_linked_list)
     };

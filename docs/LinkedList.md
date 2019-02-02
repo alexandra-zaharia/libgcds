@@ -22,6 +22,7 @@ The `LinkedList` API is detailed below.
   * `list->remove_end(LinkedList* list)` -- Removes and returns the item at the end of the linked `list` as a `void*`. Returns `NULL` if the list is null or empty.
   * `list->remove_at(LinkedList* list, int index)` -- Removes and returns the item at the specified `index` of the linked `list` as a `void*`. Returns `NULL` if the list is null or empty, or if there is no item at the specified position.
   * `list->contains(LinkedList* list, void* item)` -- Returns `true` if the linked list contains the item, and `false` otherwise.
+  * `list->index(LinkedList* list, void* item)` -- Returns the index of `item` in the linked `list`, or -1 if the item is not found.
 
 
 For more details:

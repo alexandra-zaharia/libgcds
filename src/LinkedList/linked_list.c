@@ -201,6 +201,21 @@ bool linked_list_contains(LinkedList* list, void* item)
     return false;
 }
 
+// Returns the index of the given item in the linked list, or -1 if the item is not found.
+int linked_list_index(LinkedList* list, void* item)
+{
+    if (!list || list->is_empty(list)) return -1;
+
+    int index = -1;
+    for (DNode* node = list->head; node; node = node->next) {
+        ++index;
+        if (node->data == item)
+            return index;
+    }
+
+    return -1;
+}
+
 // Creates and returns a LinkedList*, or NULL in case of failure.
 LinkedList* linked_list_create()
 {
@@ -223,6 +238,7 @@ LinkedList* linked_list_create()
     list->remove_at = linked_list_remove_at;
 
     list->contains = linked_list_contains;
+    list->index = linked_list_index;
 
     return list;
 }
