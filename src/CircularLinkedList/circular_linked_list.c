@@ -222,6 +222,24 @@ bool circular_linked_list_contains(CircularLinkedList* list, void* item)
     return false;
 }
 
+// Returns the index of the given item in the circular linked list, or -1 if the item is not found.
+int circular_linked_list_index(CircularLinkedList* list, void* item)
+{
+    if (!list || list->is_empty(list)) return -1;
+
+    int index = -1;
+    DNode* node = list->head;
+
+    do {
+        ++index;
+        if (node->data == item)
+            return index;
+        node = node->next;
+    } while (node != list->head);
+
+    return -1;
+}
+
 // Creates and returns a CircularLinkedList*, or NULL in case of failure.
 CircularLinkedList* circular_linked_list_create()
 {
@@ -244,6 +262,7 @@ CircularLinkedList* circular_linked_list_create()
     list->remove_at = circular_linked_list_remove_at;
 
     list->contains = circular_linked_list_contains;
+    list->index = circular_linked_list_index;
 
     return list;
 }

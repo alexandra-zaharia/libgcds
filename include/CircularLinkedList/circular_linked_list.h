@@ -27,6 +27,7 @@ struct CircularLinkedList {
     void* (*remove_at)(CircularLinkedList*, int);      // removes and returns item at position
 
     bool (*contains)(CircularLinkedList*, void*);      // does the list contain a given item?
+    int (*index)(CircularLinkedList*, void*);          // returns the index of an item in the list
 };
 
 CircularLinkedList* circular_linked_list_create();

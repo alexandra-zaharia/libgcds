@@ -254,6 +254,22 @@ static void test_circular_linked_list_contains(void** state)
     *state = list;
 }
 
+// Tests whether the indexes of items in the circular linked list are correctly determined.
+static void test_circular_linked_list_index(void** state)
+{
+    CircularLinkedList* list = (CircularLinkedList*) *state;
+    assert_non_null(list);
+
+    assert_false(list->contains(NULL, &values[3]));
+    for (int i = 0; i < 10; i++)
+        assert_int_equal(list->index(list, &values[i]), i);
+    int value = 10;
+    int* pvalue = &value;
+    assert_int_equal(list->index(list, pvalue), -1);
+
+    *state = list;
+}
+
 // Main ------------------------------------------------------------------------
 
 int main()
@@ -325,6 +341,10 @@ int main()
     const struct CMUnitTest tests_contains[] = {
             cmocka_unit_test_setup_teardown(
                     test_circular_linked_list_contains,
+                    setup_circular_linked_list_insert_start,
+                    teardown_circular_linked_list),
+            cmocka_unit_test_setup_teardown(
+                    test_circular_linked_list_index,
                     setup_circular_linked_list_insert_start,
                     teardown_circular_linked_list)
     };
