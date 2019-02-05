@@ -171,6 +171,16 @@ static void test_circular_linked_list_delete_start(void** state)
     *state = list;
 }
 
+// Tests deletion at the beginning of the list for a circular linked list with one element
+static void test_circular_linked_list_delete_start_one_element(void** state)
+{
+    CircularLinkedList* list = (CircularLinkedList*) *state;
+    int value = *((int*) list->remove_start(list));
+    assert_int_equal(value, 0);
+    assert_true(list->is_empty(list));
+    *state = list;
+}
+
 // Tests deletion at the end of the list
 static void test_circular_linked_list_delete_end(void** state)
 {
@@ -183,6 +193,17 @@ static void test_circular_linked_list_delete_end(void** state)
     }
     *state = list;
 }
+
+// Tests deletion at the end of the list for a circular linked list with one element
+static void test_circular_linked_list_delete_end_one_element(void** state)
+{
+    CircularLinkedList* list = (CircularLinkedList*) *state;
+    int value = *((int*) list->remove_end(list));
+    assert_int_equal(value, 0);
+    assert_true(list->is_empty(list));
+    *state = list;
+}
+
 
 // Tests deletion at a given index of the list
 static void test_circular_linked_list_delete_at(void** state)
@@ -299,6 +320,14 @@ int main()
     };
 
     const struct CMUnitTest tests_deletion[] = {
+            cmocka_unit_test_setup_teardown(
+                    test_circular_linked_list_delete_start_one_element,
+                    setup_circular_linked_list_one_element,
+                    teardown_circular_linked_list),
+            cmocka_unit_test_setup_teardown(
+                    test_circular_linked_list_delete_end_one_element,
+                    setup_circular_linked_list_one_element,
+                    teardown_circular_linked_list),
             cmocka_unit_test_setup_teardown(
                     test_circular_linked_list_delete_start,
                     setup_circular_linked_list_insert_start,
