@@ -24,13 +24,16 @@ int main()
     Point p1 = {.x = 1, .y = 10};
     Point p2 = {.x = 2, .y = 20};
     Point p3 = {.x = 3, .y = 30};
-    int status;
 
+    int status;
     status = stack->push(stack, &p1);
+    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, stack->size, stack->is_empty(stack));
+    stack_point_print(stack);
     status = stack->push(stack, &p2);
+    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, stack->size, stack->is_empty(stack));
+    stack_point_print(stack);
     status = stack->push(stack, &p3);
-    printf("Status: %2d | Item(s): %d | Empty? %d | ",
-           status, stack->size, stack->is_empty(stack));
+    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, stack->size, stack->is_empty(stack));
     stack_point_print(stack);
 
     for (int i = 0; i < 3; i++) {
