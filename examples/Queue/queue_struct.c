@@ -4,9 +4,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "stack.h"
+#include "queue.h"
 
-void stack_point_print(Stack* stack);
+void queue_point_print(Queue* queue);
 
 typedef struct {
     int x;
@@ -15,9 +15,9 @@ typedef struct {
 
 int main()
 {
-    Stack* stack = stack_create();
-    if (!stack) {
-        fprintf(stderr, "Cannot allocate stack.\n");
+    Queue* queue = queue_create();
+    if (!queue) {
+        fprintf(stderr, "Cannot allocate queue.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -26,30 +26,30 @@ int main()
     Point p3 = {.x = 3, .y = 30};
 
     int status;
-    status = stack->push(stack, &p1);
-    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, stack->size, stack->is_empty(stack));
-    stack_point_print(stack);
-    status = stack->push(stack, &p2);
-    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, stack->size, stack->is_empty(stack));
-    stack_point_print(stack);
-    status = stack->push(stack, &p3);
-    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, stack->size, stack->is_empty(stack));
-    stack_point_print(stack);
+    status = queue->enqueue(queue, &p1);
+    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, queue->size, queue->is_empty(queue));
+    queue_point_print(queue);
+    status = queue->enqueue(queue, &p2);
+    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, queue->size, queue->is_empty(queue));
+    queue_point_print(queue);
+    status = queue->enqueue(queue, &p3);
+    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, queue->size, queue->is_empty(queue));
+    queue_point_print(queue);
 
     for (int i = 0; i < 3; i++) {
-        Point* p = (Point*) stack->pop(stack);
+        Point* p = (Point*) queue->dequeue(queue);
         printf("Popped: (%d, %d) | Item(s): %d | Empty? %d ",
-               p->x, p->y, stack->size, stack->is_empty(stack));
-        stack_point_print(stack);
+               p->x, p->y, queue->size, queue->is_empty(queue));
+        queue_point_print(queue);
     }
 
-    stack->free(stack);
+    queue->free(queue);
 }
 
-void stack_point_print(Stack* stack)
+void queue_point_print(Queue* queue)
 {
-    if (!stack || !stack->top) return;
-    Item* item = stack->top;
+    if (!queue || !queue->first) return;
+    Node* item = queue->first;
     while (item) {
         Point* p = (Point*) item->data;
         printf("(%d, %d) ", p->x, p->y);
