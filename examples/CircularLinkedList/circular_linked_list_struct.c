@@ -24,13 +24,16 @@ int main()
     Point p1 = {.x = 1, .y = 10};
     Point p2 = {.x = 2, .y = 20};
     Point p3 = {.x = 3, .y = 30};
-    int status;
 
+    int status;
     status = list->insert_end(list, &p1);
+    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, list->size, list->is_empty(list));
+    list_point_print(list);
     status = list->insert_end(list, &p2);
+    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, list->size, list->is_empty(list));
+    list_point_print(list);
     status = list->insert_end(list, &p3);
-    printf("Status: %2d | Item(s): %d | Empty? %d | ",
-           status, list->size, list->is_empty(list));
+    printf("Status: %2d | Item(s): %d | Empty? %d | ", status, list->size, list->is_empty(list));
     list_point_print(list);
 
     for (int i = 0; i < 3; i++) {
