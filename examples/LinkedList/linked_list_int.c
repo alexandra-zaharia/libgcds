@@ -16,11 +16,11 @@ int main()
         exit(EXIT_FAILURE);
     }
 
-    int status, i;
     int val[] = {1, 2, 3};
+    int i;
 
     for (i = 0; i < 3; i++) {
-        status = list->insert_end(list, &val[i]);
+        int status = list->insert_end(list, &val[i]);
         printf("Status: %2d | Item(s): %d | Empty? %d | ",
                status, list->size, list->is_empty(list));
         print(list);
