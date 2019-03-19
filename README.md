@@ -38,9 +38,13 @@ ds->free(ds);
 
 Usage examples for each data structure are provided in the [examples](https://github.com/alexandra-zaharia/libgcds/tree/master/examples) directory.
 
+## Binaries
+
+Header files and GNU/Linux x86_64 binaries are provided in the [`bin`](https://github.com/alexandra-zaharia/libgcds/tree/master/bin) directory. Alternatively, new [releases](https://github.com/alexandra-zaharia/libgcds/releases) are issued at every significant change.
+
 ## How to install the library
 
-You will need `cmake` and `make` to build a static `libgcds.a` library that can be used in your projects. 
+If you prefer to compile the library from source instead of using the binaries, you will need `cmake` and `make` to build a static `libgcds.a` library that can be used in your projects. 
 
 First, clone the `libgcds` repository:
 
@@ -59,7 +63,7 @@ cd build
 Next, run `cmake` to generate a `makefile`:
 
 ```
-cmake .. -DCMAKE_INSTALL_PREFIX=/path/to/libgcds/install/dir
+cmake .. -DCMAKE_INSTALL_PREFIX=../bin
 ```
 
 You may omit the `-DCMAKE_INSTALL_PREFIX` flag, in which case `libgcds` will be installed to a standard location such as `/usr/local`. Finally, make and install the library:
