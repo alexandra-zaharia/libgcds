@@ -878,5 +878,5 @@ int main()
     int r_seq = run_tests_sequence();
     int r_has = run_tests_contains();
 
-    return r_cap && r_add && r_ins && r_del && r_seq && r_has;
+    return r_cap || r_add || r_ins || r_del || r_seq || r_has;
 }

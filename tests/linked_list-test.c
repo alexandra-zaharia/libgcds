@@ -315,5 +315,5 @@ int main()
     int status_deletion = cmocka_run_group_tests(tests_deletion, NULL, NULL);
     int status_contains = cmocka_run_group_tests(tests_contains, NULL, NULL);
 
-    return status_creation && status_insertion && status_deletion && status_contains;
+    return status_creation || status_insertion || status_deletion || status_contains;
 }
