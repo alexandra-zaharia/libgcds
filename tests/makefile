@@ -2,10 +2,10 @@ CC=gcc
 CFLAGS=-g -Wall -Wextra -Wpedantic -Wconversion 
 
 # INC specifies where libgcds header files are located
-INC=-I../build/include
+INC=-I../bin/include
 
 # LIB specifies where the static library libgcds.a is located
-LIB=-L ../build/lib
+LIB=-L ../bin/lib
 
 # Tell the linker to link with libgcds and libcmocka
 LDFLAGS=-lgcds -lcmocka
